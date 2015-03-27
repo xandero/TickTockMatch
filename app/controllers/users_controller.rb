@@ -14,7 +14,7 @@ class UsersController < ApplicationController
     if @user.save
       # logs user in automatically upon signup
       session[:user_id] = @user.id
-      redirect_to edit_user_path(@user)
+      redirect_to settings_user_path(@user)
     else
       render :new
     end
@@ -24,7 +24,7 @@ class UsersController < ApplicationController
     @user = User.find params[:id]   
   end
 
-  def edit
+  def settings
     @user = User.find params[:id]
   end
 
@@ -39,5 +39,22 @@ class UsersController < ApplicationController
     user.destroy
     redirect_to users_path
   end
-  
+
+  def locate
+    @user = User.find_by :id => session[:user_id]    
+    @ip_address = request.remote_ip
+    @list = Geocoder.search @ip_address
+    @city = @list.first.city
+    @user.update(:lat => @list[0].latitude, :long => @list[0].longitude, :location => @city)  
+  end
+
+  private
+  def user_params
+    params.require(:user).permit(:name, :email, :dob, :gender, :password, :password_confirmation)
+  end
+
+  def check_if_logged_in
+    redirect_to(root_path) unless @current_user.present?
+  end
+
 end

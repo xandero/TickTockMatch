@@ -1,0 +1,40 @@
+<% if @user.errors.any? %>
+  <ol>
+    <% @user.errors.full_messages.each do |msg| %>
+      <li>
+        <%= msg %>
+      </li>
+    <% end %>
+  </ol>
+<% end %>
+
+<div class="alert alert-success" role="alert">
+  <%= flash[:error] if flash[:error].present? %>
+  <p>Not yet a user? Sign up below</p>
+</div>
+
+<%= form_for @user do |f| %>
+    <div class="form-group">
+      <%= f.label :name, "Username", :title => 'Choose a username.' %>
+      <%= f.text_field :name, :autofocus => true, :required => true, :title => 'Choose a username.', :class => 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :email, :title => 'Enter your email address' %>
+      <%= f.email_field :email, :required => true, :title => 'Enter your email address', :class => 'form-control'  %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :password, :title => 'Enter a password' %>
+      <%= f.password_field :password, :title => 'Enter a password', :class => 'form-control', :required => true %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :password_confirmation, :title => 'Re-enter your password.' %>
+      <%= f.password_field :password_confirmation, :title => 'Re-enter your password.', :class => 'form-control', :required => true %>
+    </div>
+
+    <div class="text-right">
+      <%= button_tag 'Create account', :class => 'btn btn-primary' %>
+    </div>
+<% end %>

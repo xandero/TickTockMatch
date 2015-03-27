@@ -1,0 +1,7 @@
+<h1>Log in</h1>
+
+<%= form_tag login_path, :class => "navbar-form" do %>
+    <%= text_field :username, nil, :autofocus => :true, :class => "form-control", :placeholder => "Username" %>
+    <%= password_field_tag :password, nil, :class => "form-control", :placeholder => "Password" %>
+  <button class="btn btn-default btn-sm">Sign in</button>
+<% end %>

@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
   has_many :matches
   has_many :conversations, through: :matches
 
-  validates :username, :uniqueness => true, :presence => true
+  validates :name, :uniqueness => true, :presence => true
   validates :email, :presence => true, :uniqueness => true
   validates :password, :presence => true,
                        :confirmation => true,
