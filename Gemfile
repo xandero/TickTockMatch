@@ -38,8 +38,6 @@ gem 'font-awesome-sass'
 gem 'normalize-rails'
 
 gem 'figaro'
-gem 'omniauth'
-gem 'omniauth-facebook'
 
 gem 'geocoder'
 gem 'mini_magick'

@@ -15,4 +15,21 @@
 #
 
 class Match < ActiveRecord::Base
+
+  belongs_to :conversation
+
+  belongs_to :initiator, :foreign_key => :user1_id, class_name: 'User'
+  belongs_to :recipricator, :foreign_key => :user2_id, class_name: 'User'
+
+  validates_uniqueness_of :user1_id, :scope => :user2_id
+
+  scope :involving, -> (user) do
+    where("matches.user1_id = ? OR matches.user2_id = ?", user.id, user.id)    
+  end
+
+  scope :between, -> (user1_id, user2_id) do
+    where("(matches.user1_id = ? AND matches.user2_id = ?) OR (matches.user1_id = ? AND matches.user2_id = ?)", user1_id, user2_id, user1_id, user2_id )
+  end
+
+
 end

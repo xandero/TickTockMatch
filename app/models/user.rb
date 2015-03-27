@@ -27,4 +27,20 @@
 #
 
 class User < ActiveRecord::Base
+
+  has_many :matches
+  has_many :conversations, through: :matches
+
+  validates :username, :uniqueness => true, :presence => true
+  validates :email, :presence => true, :uniqueness => true
+  validates :password, :presence => true,
+                       :confirmation => true,
+                       :length => {:within => 6..30},
+                       :on => :create
+  has_secure_password
+
+  def age
+    (Date.today - dob).to_i / 365 unless dob.nil?
+  end
+
 end
