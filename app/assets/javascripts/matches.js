@@ -1,6 +1,6 @@
-
-create multiple div vertically down the page that each represent a conversation.
 For each match do:
+  create div across page with 'match-id' as the div ID
+  (is it possible to sort these divs by descending order of @match.last_updated ?)
 
 Create small div on LHS with thumbnail photo of the person matched with.
 Display matches name at top of div.
@@ -16,6 +16,8 @@ else if one or more questions not answered
     the person matched has not answered, show "awaiting answer from your match"
   end 
 end
+
+Create event handler
 
 On click of each div, 
   if both questions have been answered
