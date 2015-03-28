@@ -41,6 +41,7 @@ gem 'figaro'
 
 gem 'geocoder'
 gem 'mini_magick'
+gem 'rmagick'
 gem 'cloudinary'
 gem 'carrierwave'
 gem 'private_pub'

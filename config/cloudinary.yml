@@ -1,0 +1,19 @@
+---
+development:
+  cloud_name: dkbg2jncl
+  api_key: '471189874437296'
+  api_secret: cXJttWQ7Rp9yQVy0EjSxg3dBnRc
+  enhance_image_tag: true
+  static_image_support: false
+production:
+  cloud_name: dkbg2jncl
+  api_key: '471189874437296'
+  api_secret: cXJttWQ7Rp9yQVy0EjSxg3dBnRc
+  enhance_image_tag: true
+  static_image_support: true
+test:
+  cloud_name: dkbg2jncl
+  api_key: '471189874437296'
+  api_secret: cXJttWQ7Rp9yQVy0EjSxg3dBnRc
+  enhance_image_tag: true
+  static_image_support: false

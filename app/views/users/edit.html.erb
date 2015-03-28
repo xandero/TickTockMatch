@@ -1,0 +1,51 @@
+<h2>Edit Settings</h2>
+
+<%= form_for @user, html: { multipart: true } do |f| %>
+  
+  <div>
+    <%= f.label :name, "Username" %>
+    <%= f.text_field :name,  :disabled => "true" %>
+  </div>
+  <div>
+    <%= f.label :email, "Email", :title => 'Enter your email address.' %>
+    <%= f.text_field :email, :title => 'Enter your email address.' %>
+  </div>
+  <div>
+    <%= f.label :dob, "Date of birth", :title => 'Enter your date of birth.' %>
+    <%= f.date_field :dob, :required => true, :autofocus => true, :title => 'Enter your date of birth.' %>
+  </div>
+  <div>
+    <%= f.label :gender, :title => 'Please select your gender.' %>
+    <%= f.select :gender, [['Male','Male'],['Female','Female']], :required => true, :include_blank => true %>
+  <div>
+    <div>
+      <%= f.label :question, "What do you want to ask?" %>
+      <%= f.text_field :question, :placeholder => 'Enter the question for your matches...' %>
+    </div>
+    <div>
+      <%= f.label :question_time, "Time to answer?" %>
+      <%= f.number_field :question_time, :min => '10', :max => '60' %>
+    </div>
+
+    <p>Looking for</p>
+    <div>
+      <%= f.label :sexual_preference, "Who are you interested in?" %>
+      <%= f.select :sexual_preference, [['Male','Male'],['Female','Female']], :include_blank => true %>
+  <div>
+    <div>
+      <%= f.number_field :age_min, :min => '18', :max => '99' %>
+      <%= f.number_field :age_max, :min => '18', :max => '99' %>
+    </div>
+    <div>
+      <%= f.label :distance_max, "Search distance" %>
+      <%= f.number_field :distance_max, :min => '1', :max => '500' %>
+    </div>
+    <div>
+      <%= f.file_field :photo %>
+      <%  f.hidden_field(:photo_cache) %>
+    </div>
+  </div>
+
+  <%= f.submit "Update Profile" %>
+<% end %>
+

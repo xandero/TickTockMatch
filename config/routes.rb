@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   root :to => 'pages#home'
 
   resources :users
-  resources :users, :controller => "users", :path_names => { :edit => "settings" }
+  resources :profiles, only: [:show, :index]
 
   get '/login' => 'session#new'
   post '/login' => 'session#create'
