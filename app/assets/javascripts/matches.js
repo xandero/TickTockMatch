@@ -1,5 +1,5 @@
 For each match do:
-  create div across page with 'match-id' as the div ID
+  create div across page with 'match-id' as the div ID or a data field?
   (is it possible to sort these divs by descending order of @match.last_updated ?)
 
 Create small div on LHS with thumbnail photo of the person matched with.
@@ -20,10 +20,10 @@ end
 Create event handler
 
 On click of each div, 
-  if both questions have been answered
-    load the relevant conversation page.
+  if conversation with match_id (for this div, which will be either its ID or in its data field) exists
+    load conversation.js
   else
-    load the questions page
+    load questions.js
   end
 
 

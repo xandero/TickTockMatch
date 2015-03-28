@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   resources :users
   resources :profiles, only: [:show, :index]
+  resources :conversations, only: [:show, :index]
+  resources :matches, only: [:show, :index]
 
   get '/login' => 'session#new'
   post '/login' => 'session#create'

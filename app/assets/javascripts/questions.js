@@ -7,17 +7,22 @@ create an event handler:
   
   on 'click' #my-question
   load the current user question into #question
+
     if the reciprocator has answered
+      
       load reciprocator answer into #answer
       create 2 buttons '#accept-answer', '#reject-answer' 
+      
       create event handler:
         on 'click' #accept-answer
-          if match.reciprocated == true 
-            there is a match!!!
-          else if match.reciprocated == nil
-            set match.reciprocated to true
+          set match.current_user.approval to true
+          if match.other_user.approval == true
+            popup - there is a match!! with continue button
+            conversation = Conversation.new date = current_timestamp
+          else if match.other_user.approval == nil
+            'we have not heard back from your match yet etc'
           else
-            match.reciprocated must be false, so inform user that match has been rejected.
+            match.other_user.approval must be false 'sorry, looks like you did not match'
           end
         
         on 'click' #reject-answer
@@ -25,8 +30,8 @@ create an event handler:
             set match.reciprocated to false
           else if match.reciprocated != nil
             there is no match!
-          (does this handle all situations?)
-
+            (does this handle all situations?)
+          end
     else
       display "they haven't answered yet!" in #answer
     end
@@ -45,6 +50,14 @@ create an event handler:
     If text field is empty, place "oops, looks like they didn't answer" in the match model.
   else
     display the current user answer, but do not allow to be edited
+    change class, and hence colour, if the answer has been accepted/rejected.
+    if match.other_user.approval is true
+      change class to accepted (blue)
+    else if match.other_user.approval is false
+      change class to rejected (grey)
+    else match.other_user.approval must be nil
+      do not change class
+    end
   end
 
   on 'click' #back-to-matches

@@ -40,14 +40,6 @@ class UsersController < ApplicationController
     redirect_to users_path
   end
 
-  def locate
-    @user = User.find_by :id => session[:user_id]    
-    @ip_address = request.remote_ip
-    @list = Geocoder.search @ip_address
-    @city = @list.first.city
-    @user.update(:lat => @list[0].latitude, :long => @list[0].longitude, :location => @city)  
-  end
-
   private
   def user_params
     params.require(:user).permit(:name, :email, :dob, :gender, :password, :password_confirmation, :photo, :question, :question_time, :age_min, :age_max, :distance_max, :sexual_preference )
