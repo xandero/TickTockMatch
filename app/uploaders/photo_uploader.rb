@@ -18,12 +18,8 @@ class PhotoUploader < CarrierWave::Uploader::Base
     resize_to_fit(50, 50)
   end
 
-  def public_id
-    return model.short_name
-  end  
-
   # Choose what kind of storage to use for this uploader:
-  storage :file if Rails.env.development?
+  storage :file 
   # storage :fog
 
   # Override the directory where uploaded files will be stored.

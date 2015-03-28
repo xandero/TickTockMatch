@@ -50,7 +50,7 @@ class UsersController < ApplicationController
 
   private
   def user_params
-    params.require(:user).permit(:name, :email, :dob, :gender, :password, :password_confirmation)
+    params.require(:user).permit(:name, :email, :dob, :gender, :password, :password_confirmation, :photo, :question, :question_time, :age_min, :age_max, :distance_max, :sexual_preference )
   end
 
   def check_if_logged_in
