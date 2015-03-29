@@ -1,45 +1,45 @@
-For each match do:
-  create div across page with 'match-id' as the div ID or a data field?
-  (is it possible to sort these divs by descending order of @match.last_updated ?)
+// For each match do:
+//   create div across page with 'match-id' as the div ID or a data field?
+//   (is it possible to sort these divs by descending order of @match.last_updated ?)
 
-Determine whether @current_user id user1 or user2 in the match model.
-  then set var thisUser = user1_id/user2_id
-  also set var matchedUser = user1_id/user2_id
+// Determine whether @current_user id user1 or user2 in the match model.
+//   then set var thisUser = user1_id/user2_id
+//   also set var matchedUser = user1_id/user2_id
 
-Create small div on LHS with thumbnail photo of the matchedUser.
-Display matchedUser name at top of div.
-if both questions have been answered 
-   display the last message of the conversation within the div
-  else 
-    there are no messages, display "No messages...yet"
-  end
-else if one or more questions not answered
-  if thisUser has not answered the question
-    show "your question awaits!" (also show this message if neither have answered)
-  else
-    the matchedUser has not answered, show "awaiting answer from your match"
-  end 
-end
+// Create small div on LHS with thumbnail photo of the matchedUser.
+// Display matchedUser name at top of div.
+// if both questions have been answered 
+//    display the last message of the conversation within the div
+//   else 
+//     there are no messages, display "No messages...yet"
+//   end
+// else if one or more questions not answered
+//   if thisUser has not answered the question
+//     show "your question awaits!" (also show this message if neither have answered)
+//   else
+//     the matchedUser has not answered, show "awaiting answer from your match"
+//   end 
+// end
 
-Create event handler
+// Create event handler
 
-On 'click' of each match div, 
-  if conversation with match_id (for this div, which will be either its ID or in its data field) exists
-    load conversation.js
-  else
-    load questions.js
-  end
+// On 'click' of each match div, 
+//   if conversation with match_id (for this div, which will be either its ID or in its data field) exists
+//     load conversation.js
+//   else
+//     load questions.js
+//   end
 
 
-function addConversation () {
-    var NewContent = '<div class="reply"><input name="name" type="text" id="name" size="20" value="" style="height:20px; margin-top:10px; width:480px;margin-left:90px; font-size:14px;" /></div>'
-    $('.').on('click', function () {
-        var $this = $(this);
+// function addConversation () {
+//     var NewContent = '<div class="reply"><input name="name" type="text" id="name" size="20" value="" style="height:20px; margin-top:10px; width:480px;margin-left:90px; font-size:14px;" /></div>'
+//     $('.').on('click', function () {
+//         var $this = $(this);
 
-        if ($reply.length) {
-            $reply.toggle();
-        } else {
-            $(NewContent).insertAfter($this);
-        }
-    });
-};
+//         if ($reply.length) {
+//             $reply.toggle();
+//         } else {
+//             $(NewContent).insertAfter($this);
+//         }
+//     });
+// };
