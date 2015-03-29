@@ -14,16 +14,13 @@
 #  thumbnail         :text
 #  question          :string
 #  question_time     :integer
-#  oauth_token       :string
-#  oauth_expires_at  :datetime
-#  provider          :string
 #  password_digest   :string
 #  location          :string
-#  uid               :string
 #  age_min           :integer
 #  age_max           :integer
 #  distance_max      :integer
 #  sexual_preference :string
+#  age               :integer
 #
 
 class User < ActiveRecord::Base

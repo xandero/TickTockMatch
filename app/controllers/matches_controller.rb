@@ -7,6 +7,12 @@ class MatchesController < ApplicationController
     find each match with @current_user in either user1 or user2 position
   end
 
+  def index
+  end
+
+  def edit
+  end
+
   def create
     match = Match.new 
   end

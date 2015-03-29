@@ -3,12 +3,17 @@ respond_to :html, :js
 
   def index
     locate
-    @profiles = User.all
-    @user = User.find_by :id => session[:user_id] 
-    render :json => @user
-    render :json => @profiles
+    @user = User.find_by :id => session[:user_id]
   end
 
+  def filter_profiles
+    @user = User.find_by :id => session[:user_id]
+    age_min = @user.age_min
+    age_max = @user.age_max
+    sexual_preference = @user.sexual_preference
+
+    User.where(:gender => 'Male').where("age_min >= ?", age_min).where("age_max <= ?", age_max)
+  end
 
   def show
     @user = User.find_by :id => session[:user_id] 

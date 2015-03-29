@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150329010257) do
+ActiveRecord::Schema.define(version: 20150329221150) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(version: 20150329010257) do
     t.integer "age_max"
     t.integer "distance_max"
     t.string  "sexual_preference"
+    t.integer "age"
   end
 
 end
