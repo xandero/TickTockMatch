@@ -1,7 +1,14 @@
 class ProfilesController < ApplicationController
+respond_to :html, :js
 
   def index
     locate
+    @profiles = User.all
+
+    respond_to do |format|
+      format.html
+      format.json
+    end
 
     #this is where we will find all user photos and allow to be swiped
   end

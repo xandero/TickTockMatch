@@ -1,16 +1,36 @@
+var browseProfiles = {
+
+  loadProfile: function () {
+    // only return results that fit user age and location specs
+    $('#accept').on('click', 'button', this.acceptProfile);
+    $('#reject').on('click', 'button', this.rejectProfile);
+    $.get('/users/index', function(response) {
+      $('#potential').html(response.photo);
+        data: { "potentialID": $('#potential').data(user_id)},  
+      $('#potential-details').html(response.name);
+    },
+  },  
+    
+  })
+},
+
+  acceptProfile: function (event) {
+    $.post('/', function(response) {
+      $('#browsing').html()
+    })
+    create a new instance of match
+  },
+
+  rejectProfile: function (event) {
+    loadProfile();
+  }
+}
 
 $(document).ready(function() {
-  $('<div id='potential'></div>').appendTo('#browsing'),
-  $('<div id='potential-details'></div>').appendTo('#potential'),
-  $('<button id='accept'>').appendTo('#potential-details'),
-  $('<button id='reject'>').appendTo('#potential-details');
+  browseProfiles.loadProfile();
+ 
 });
 
-
-
-// create div '#potential' to display profile images
-// create thin div '#potential-details'
-// create two buttons, '#reject' '#accept'
 
 // var browse = load any random user profile (be sure to go through all profiles before randomly picking again)
 //   check if browse == @current_user
