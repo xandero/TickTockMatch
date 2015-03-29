@@ -2,7 +2,7 @@ create div '#potential' to display profile images
 create thin div '#potential-details'
 create two buttons, '#reject' '#accept'
 
-var browse = load any random user profile
+var browse = load any random user profile (be sure to go through all profiles before randomly picking again)
   check if browse == @current_user
   also check if any matches have @current_user && browse as user1_id and user2_id
   if either of the above are true, discard browse and loop back to beginning
@@ -23,4 +23,5 @@ add event handler
     end
 
   on 'click' '#reject'
-    
+    load next profile
+
