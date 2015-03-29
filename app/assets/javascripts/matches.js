@@ -31,15 +31,3 @@
 //   end
 
 
-// function addConversation () {
-//     var NewContent = '<div class="reply"><input name="name" type="text" id="name" size="20" value="" style="height:20px; margin-top:10px; width:480px;margin-left:90px; font-size:14px;" /></div>'
-//     $('.').on('click', function () {
-//         var $this = $(this);
-
-//         if ($reply.length) {
-//             $reply.toggle();
-//         } else {
-//             $(NewContent).insertAfter($this);
-//         }
-//     });
-// };

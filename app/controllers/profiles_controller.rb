@@ -4,13 +4,9 @@ respond_to :html, :js
   def index
     locate
     @profiles = User.all
-
-    respond_to do |format|
-      format.html
-      format.json
-    end
-
-    #this is where we will find all user photos and allow to be swiped
+    @user = User.find_by :id => session[:user_id] 
+    render :json => @user
+    render :json => @profiles
   end
 
 

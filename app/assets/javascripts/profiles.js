@@ -1,10 +1,13 @@
 var browseProfiles = {
 
+  var currentUser = $.get('/users/show')
+
   loadProfile: function () {
     // only return results that fit user age and location specs
     $('#accept').on('click', 'button', this.acceptProfile);
     $('#reject').on('click', 'button', this.rejectProfile);
-    $.get('/users/index', function(response) {
+    $.getJSON('/users/index', function(response) {
+      if response.user_id === 
       $('#potential').html(response.photo);
         data: { "potentialID": $('#potential').data(user_id)},  
       $('#potential-details').html(response.name);
@@ -13,22 +16,34 @@ var browseProfiles = {
     
   })
 },
+  var matchId = $('');
 
   acceptProfile: function (event) {
-    $.post('/', function(response) {
-      $('#browsing').html()
+    $.getJSON('/users/show', function(response) {
+
     })
-    create a new instance of match
+    $.post('/matches/create', {
+      match: {
+        match_id: matchId,
+        user1_id: currentUser,
+        user2_id: $(#potentialID).val(),
+        u1_question: u1_question.val(),
+        u2_question: u2_question.val()
+      }
+    }
   },
 
   rejectProfile: function (event) {
+    $('potential').empty();
+    $('potential-details').empty();
     loadProfile();
   }
 }
 
 $(document).ready(function() {
+  $.get()
   browseProfiles.loadProfile();
- 
+
 });
 
 
