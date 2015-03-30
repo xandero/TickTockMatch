@@ -2,23 +2,19 @@ class ProfilesController < ApplicationController
 respond_to :html, :js
 
   def index
-    locate
-    @user = User.find_by :id => session[:user_id]
-  end
-
-  def filter_profiles
     @user = User.find_by :id => session[:user_id]
     age_min = @user.age_min
     age_max = @user.age_max
     sexual_preference = @user.sexual_preference
+    @potential_matches = User.all.where('age > ?', age_min).where('age < ?', age_max).where(:gender => sexual_preference )
+  end
 
-    User.where(:gender => 'Male').where("age_min >= ?", age_min).where("age_max <= ?", age_max)
+  def filter_profiles
+
   end
 
   def create
     @user = User.find_by :id => session[:user_id]
-
-
   end
 
   def show

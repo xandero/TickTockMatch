@@ -3,11 +3,10 @@ var viewQuestions = {
   getQuestions: function () {
     $.get('/questions/extract', function(response) {
       //viewQuestions.getQuestions = response
-   
-      $('#my-question').val(u1/u2 question)
-      $('#my-answer').val(u1/u2 answer)
-      $('#their-question').val(u1/u2 question)
-      $('#their-answer').val(u1/u2 answer)
+      $('#my-question').val(u1 question)
+      $('#my-answer').val(u1 answer)
+      $('#their-question').val(u2 question)
+      $('#their-answer').val(u2 answer)
     })
   },
   
@@ -27,18 +26,18 @@ var viewQuestions = {
     })
   }
 
-  submitAnswer: function () {
+  updateMatch: function () {
     var myAnswer = $('#my-answer').val();
     $.post('matches/edit' {
       data: {
-        myanswer: $('#my-answer').val();
+        u1/u2_question_answer: myAnswer;
         // problem in determining whether the current user is user1 or user2
       }
     })
   }
 };
 
-$(document).ready(function() {
+$(document).ready(function () {
   $('#accept-answer').on('click', 'button', this.acceptAnswer);
   $('#reject-answer').on('click', 'button', this.rejectAnswer);
   $('#submit-answer').on('click', 'button', this.updateMatch);

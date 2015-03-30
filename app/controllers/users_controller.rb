@@ -3,7 +3,6 @@ class UsersController < ApplicationController
 
   def index
     @users = User.all
-    render :json => index
   end
 
   def new
@@ -11,11 +10,13 @@ class UsersController < ApplicationController
   end
   
   def create
+
     @user = User.create user_params
+    @user.age = age
     if @user.save
       # logs user in automatically upon signup
       session[:user_id] = @user.id
-      redirect_to settings_user_path(@user)
+      redirect_to edit_user_path(@user)
     else
       render :new
     end

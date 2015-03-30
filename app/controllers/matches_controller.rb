@@ -6,13 +6,13 @@ class MatchesController < ApplicationController
   end
 
   def load_conversation
-    redirect_to conversation_path(conversation_id)
+    # redirect_to conversation_path(conversation_id)
   end
 
   def edit
 
-    match.u1_question_answer = params[:myAnswer]
-    match.u2_question_answer = params[:initiator_answer]
+    # match.u1_question_answer = params[:myAnswer]
+    # match.u2_question_answer = params[:initiator_answer]
   end
 
   def create

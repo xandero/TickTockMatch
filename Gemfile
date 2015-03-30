@@ -36,6 +36,7 @@ gem 'rails_12factor', group: :production
 
 gem 'font-awesome-sass'
 gem 'normalize-rails'
+gem 'responders', '~> 2.0'
 
 gem 'figaro'
 

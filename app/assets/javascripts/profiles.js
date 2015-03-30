@@ -6,10 +6,9 @@ var browseProfiles = {
     // only return results that fit user age and location specs
     $('#accept').on('click', 'button', this.acceptProfile);
     $('#reject').on('click', 'button', this.rejectProfile);
-    $.get('/users/index', function(response) {
+    $.get('/profiles/index', function(response) {
       browseProfiles.loadProfile = response
-        data: { "potentialID": $('#potential').data(user_id)},  
-
+    
     }),
   },
 
@@ -24,6 +23,9 @@ var browseProfiles = {
       data: {
         user2_id: $(#potentialID).val(),
         u2_question: u2_question.val()
+    $('potential').empty();
+    $('potential-details').empty();
+    loadProfile();
       }
     });
   },
@@ -32,13 +34,15 @@ var browseProfiles = {
     $('potential').empty();
     $('potential-details').empty();
     loadProfile();
+
+    // create instance of match and set reciprocal to false
+
   }
 }
 
 $(document).ready(function() {
   $.get()
   browseProfiles.loadProfile();
-
 });
 
 
