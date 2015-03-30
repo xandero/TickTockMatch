@@ -15,6 +15,12 @@ respond_to :html, :js
     User.where(:gender => 'Male').where("age_min >= ?", age_min).where("age_max <= ?", age_max)
   end
 
+  def create
+    @user = User.find_by :id => session[:user_id]
+    @potential_match =  
+    
+  end
+
   def show
     @user = User.find_by :id => session[:user_id] 
   end

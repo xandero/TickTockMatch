@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   resources :users, :matches, :conversations
   resources :profiles, only: [:show, :index]
 
+  get '/matches/find_match' => 'matches#find_match'
+
   get '/login' => 'session#new'
   post '/login' => 'session#create'
   delete '/login' => 'session#destroy'

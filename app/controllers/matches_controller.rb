@@ -1,20 +1,35 @@
 class MatchesController < ApplicationController
 
-  def determine_user
-    find id of current_user
-    need to figure out whether @current_user is user1 or user2 in each match
+  def index
+    find_matches
+    load_questions
 
-    find each match with @current_user in either user1 or user2 position
   end
 
-  def index
+  def load_conversation
+    redirect_to conversation_path(conversation_id)
   end
 
   def edit
+    user answers arrive here from question.js
+    user answer accept/reject arrive here from question.js
   end
 
   def create
+    determine_user
+    @user = User.find_by :id => session[:user_id]
     match = Match.new 
+    match.user1_id = @user.id
+    match.user2_id = @matchedUser.id
+    match.u1_question = @user.question
+    match.u2_question = @matchedUser.question
+    match.save
   end
+
+  def locate_match
+    match = Match.find params[:id]
+
+  end
+
 
 end

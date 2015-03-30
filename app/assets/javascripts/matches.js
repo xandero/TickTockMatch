@@ -1,10 +1,33 @@
-// For each match do:
-//   create div across page with 'match-id' as the div ID or a data field?
-//   (is it possible to sort these divs by descending order of @match.last_updated ?)
+// sort divs according to last modified
 
-// Determine whether @current_user id user1 or user2 in the match model.
-//   then set var thisUser = user1_id/user2_id
-//   also set var matchedUser = user1_id/user2_id
+var browseMatches = {
+
+  loadConversation: function () {
+    $.post('/conversations/index', {
+      data: {
+
+      }
+    })
+    }
+
+  listMatches: function () {
+    $('.matched').on('click', this.loadConversation);
+    $.get('/matches/index', function(response) {
+      
+
+    }),
+
+  createConversation: function () {
+    
+  }
+},
+ 
+
+$(document).ready(function() {
+  browseMatches.listMatches();
+
+});
+
 
 // Create small div on LHS with thumbnail photo of the matchedUser.
 // Display matchedUser name at top of div.
