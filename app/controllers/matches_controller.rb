@@ -3,7 +3,6 @@ class MatchesController < ApplicationController
   def index
     find_matches
     load_questions
-
   end
 
   def load_conversation
@@ -11,8 +10,9 @@ class MatchesController < ApplicationController
   end
 
   def edit
-    user answers arrive here from question.js
-    user answer accept/reject arrive here from question.js
+
+    match.u1_question_answer = params[:myAnswer]
+    match.u2_question_answer = params[:initiator_answer]
   end
 
   def create
@@ -28,8 +28,6 @@ class MatchesController < ApplicationController
 
   def locate_match
     match = Match.find params[:id]
-
   end
-
 
 end

@@ -17,8 +17,8 @@ respond_to :html, :js
 
   def create
     @user = User.find_by :id => session[:user_id]
-    @potential_match =  
-    
+
+
   end
 
   def show

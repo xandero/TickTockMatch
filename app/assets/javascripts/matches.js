@@ -17,9 +17,6 @@ var browseMatches = {
 
     }),
 
-  createConversation: function () {
-    
-  }
 },
  
 

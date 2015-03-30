@@ -1,7 +1,50 @@
-// create three buttons at the top of page "#my-question", "#their-question", "#back-to-matches"
+var viewQuestions = {
 
-// create a div #question, within which the question text will be placed.
-// create a div #answer, in which answers will be placed (if they exist)
+  getQuestions: function () {
+    $.get('/questions/extract', function(response) {
+      //viewQuestions.getQuestions = response
+   
+      $('#my-question').val(u1/u2 question)
+      $('#my-answer').val(u1/u2 answer)
+      $('#their-question').val(u1/u2 question)
+      $('#their-answer').val(u1/u2 answer)
+    })
+  },
+  
+  acceptAnswer: function () {
+    $.post('/questions/update', {
+      data: {
+        u1/u2_approval: true
+      }
+    })
+  },
+
+  rejectAnswer: function () {
+    $.post('/questions/update', {
+      data: {
+        u1/u2_approval: false
+      }
+    })
+  }
+
+  submitAnswer: function () {
+    var myAnswer = $('#my-answer').val();
+    $.post('matches/edit' {
+      data: {
+        myanswer: $('#my-answer').val();
+        // problem in determining whether the current user is user1 or user2
+      }
+    })
+  }
+};
+
+$(document).ready(function() {
+  $('#accept-answer').on('click', 'button', this.acceptAnswer);
+  $('#reject-answer').on('click', 'button', this.rejectAnswer);
+  $('#submit-answer').on('click', 'button', this.updateMatch);
+  getQuestions();
+});
+
 
 // create an event handler:
   
