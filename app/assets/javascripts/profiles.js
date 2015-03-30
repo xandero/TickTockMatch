@@ -1,47 +1,42 @@
-var browseProfiles = {
-
-  var currentUser = $.get('/users/show')
-
-  loadProfile: function () {
-    // only return results that fit user age and location specs
-    $('#accept').on('click', 'button', this.acceptProfile);
-    $('#reject').on('click', 'button', this.rejectProfile);
-    $.get('/profiles/index', function(response) {
-      browseProfiles.loadProfile = response
-    
-    }),
-  },
-
-  showProfile: function () {
-    $('#potential').html(response.photo);
-    $('#potential-details').html(response.name, response.age);
-  }
-
-  acceptProfile: function (event) {
-
-    $.post('/matches/create', {
-      data: {
-        user2_id: $(#potentialID).val(),
-        u2_question: u2_question.val()
-    $('potential').empty();
-    $('potential-details').empty();
-    loadProfile();
-      }
-    });
-  },
-
-  rejectProfile: function (event) {
-    $('potential').empty();
-    $('potential-details').empty();
-    loadProfile();
-
-    // create instance of match and set reciprocal to false
-
-  }
-}
-
 $(document).ready(function() {
-  $.get()
+
+  var currentUser = $.get('/users/show');
+
+  var browseProfiles = {
+    loadProfile: function() {
+      $('#accept').on('click', 'button', this.acceptProfile);
+      $('#reject').on('click', 'button', this.rejectProfile);
+      $.get('/profiles/index', function(response) {
+        browseProfiles.loadProfile = response;
+      });
+    },
+    showProfile: function() {
+      $('#potential').html(response.photo);
+      $('#potential-details').html(response.name, response.age);
+      },
+    };
+
+    var acceptProfile = function (event) {
+
+      $.post('/matches/create', {
+        data: {
+          user2_id: $('#potentialID').val(),
+          u2_question: u2_question.val()
+        }
+      });
+      $('potential').empty();
+      $('potential-details').empty();
+      loadProfile();
+    };
+      });
+
+    var rejectProfile = function (event) {
+      $('potential').empty();
+      $('potential-details').empty();
+      loadProfile();
+      // create instance of match and set reciprocal to false
+    };
+ 
   browseProfiles.loadProfile();
 });
 
@@ -68,4 +63,3 @@ $(document).ready(function() {
 
 //   on 'click' '#reject'
 //     load next profile
-

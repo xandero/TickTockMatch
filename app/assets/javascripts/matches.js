@@ -1,28 +1,15 @@
 // sort divs according to last modified
 
-var browseMatches = {
+$(document).ready(function() {
 
-  loadConversation: function () {
-    $.post('/conversations/index', {
-      data: {
-
-      }
-    })
-    }
-
-  listMatches: function () {
+  var listMatches = function () {
     $('.matched').on('click', this.loadConversation);
     $.get('/matches/index', function(response) {
-      
-
+      console.log(response);  
     }),
-
-},
- 
-
-$(document).ready(function() {
-  browseMatches.listMatches();
-
+  },
+  
+  listMatches();
 });
 
 

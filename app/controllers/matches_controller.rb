@@ -1,8 +1,19 @@
 class MatchesController < ApplicationController
 
+  def determine_user
+    if @user == @match[0].user1_id
+      @matchedUser = @match[0].user2_id
+    else
+      @matchedUser = @match[0].user1_id
+    end
+  end
+
   def index
-    find_matches
-    load_questions
+    @user = User.find_by :id => session[:user_id]
+    #@match = [] Create array of matches and then loop through to create divs and relevant IDs?
+    @match = Match.all.where(:user1_id || :user2_id => @user)
+   
+    determine_user
   end
 
   def load_conversation
@@ -10,7 +21,6 @@ class MatchesController < ApplicationController
   end
 
   def edit
-
     # match.u1_question_answer = params[:myAnswer]
     # match.u2_question_answer = params[:initiator_answer]
   end

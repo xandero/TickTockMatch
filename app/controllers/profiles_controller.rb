@@ -9,10 +9,6 @@ respond_to :html, :js
     @potential_matches = User.all.where('age > ?', age_min).where('age < ?', age_max).where(:gender => sexual_preference )
   end
 
-  def filter_profiles
-
-  end
-
   def create
     @user = User.find_by :id => session[:user_id]
   end

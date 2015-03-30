@@ -30,25 +30,4 @@ class Match < ActiveRecord::Base
   scope :between, -> (user1_id, user2_id) do
     where("(matches.user1_id = ? AND matches.user2_id = ?) OR (matches.user1_id = ? AND matches.user2_id = ?)", user1_id, user2_id, user1_id, user2_id )
   end
-
-  def current_user
-    @user = User.find_by :id => session[:user_id]
-  end
-
-  def determine_user
-    if @user == @match.user1_id
-      @matchedUser = @match.user2_id
-    else
-      @matchedUser = @match.user1_id
-    end
-  end
-
-  def find_matches
-    current_user
-    determine_user
-    @match = []
-    @match << Match.where(:user1_id || :user2_id => @user)
-  end
-
-
 end
