@@ -4,10 +4,28 @@ $(document).ready(function() {
 
   var listMatches = function () {
     $('.matched').on('click', this.loadConversation);
-    $.get('/matches/index', function(response) {
-      console.log(response);  
-    }),
-  },
+    $.get('/matches', function(response) {
+      // debugger;
+      var template_first_user = _.template("<div class='matched we-initiated' data-match='<%= id %>'><p>We initiated with: <%= user_id %></p></div>");
+      var template_second_user = _.template("<div class='matched' data-match='<%= id %>'><p>They (<%= user_id %>) initiated with us</p></div>");
+      var current_user_id = response.current_user;
+
+      _.each( response.matches, function (match) {
+        // console.log(match);
+        var html;
+        if ( current_user_id === match.user1_id ) {
+          html = template_first_user( { user_id: match.user2_id, id: match.id } );
+        } else {
+          html = template_second_user( { user_id: match.user1_id, id: match.id } )
+        }
+        $("body").append(html)
+      });
+
+// var template = _.template("<b><%- value %></b>");
+// template({value: '<script>'});
+
+    });
+  };
   
   listMatches();
 });

@@ -3,34 +3,31 @@ var viewQuestions = {
   getQuestions: function () {
     $.get('/questions/extract', function(response) {
       //viewQuestions.getQuestions = response
-      $('#my-question').val(u1 question)
-      $('#my-answer').val(u1 answer)
-      $('#their-question').val(u2 question)
-      $('#their-answer').val(u2 answer)
+      $('#my-question').val(u1_question)
+      $('#my-answer').val(u1_answer)
+      $('#their-question').val(u2_question)
+      $('#their-answer').val(u2_answer)
     })
   },
-  
   acceptAnswer: function () {
     $.post('/questions/update', {
       data: {
-        u1/u2_approval: true
+      // 1/u2_approval: true
       }
     })
   },
-
   rejectAnswer: function () {
     $.post('/questions/update', {
       data: {
-        u1/u2_approval: false
+        // u1/u2_approval: false
       }
     })
-  }
-
+  },
   updateMatch: function () {
     var myAnswer = $('#my-answer').val();
-    $.post('matches/edit' {
+    $.post('matches/edit', {
       data: {
-        u1/u2_question_answer: myAnswer;
+        // u1/u2_question_answer: myAnswer;
         // problem in determining whether the current user is user1 or user2
       }
     })
@@ -38,12 +35,11 @@ var viewQuestions = {
 };
 
 $(document).ready(function () {
-  $('#accept-answer').on('click', 'button', this.acceptAnswer);
-  $('#reject-answer').on('click', 'button', this.rejectAnswer);
-  $('#submit-answer').on('click', 'button', this.updateMatch);
-  getQuestions();
+  $('#accept-answer').on('click', 'button', viewQuestions.acceptAnswer);
+  $('#reject-answer').on('click', 'button', viewQuestions.rejectAnswer);
+  $('#submit-answer').on('click', 'button', viewQuestions.updateMatch);
+  viewQuestions.getQuestions();
 });
-
 
 // create an event handler:
   

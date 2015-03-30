@@ -6,17 +6,15 @@ $(document).ready(function() {
     loadProfile: function() {
       $('#accept').on('click', 'button', this.acceptProfile);
       $('#reject').on('click', 'button', this.rejectProfile);
-      $.get('/profiles/index', function(response) {
-        browseProfiles.loadProfile = response;
+      $.get('/profiles', function(response) {
       });
     },
     showProfile: function() {
       $('#potential').html(response.photo);
       $('#potential-details').html(response.name, response.age);
       },
-    };
-
-    var acceptProfile = function (event) {
+    },
+    acceptProfile = function (event) {
 
       $.post('/matches/create', {
         data: {
@@ -27,18 +25,17 @@ $(document).ready(function() {
       $('potential').empty();
       $('potential-details').empty();
       loadProfile();
-    };
-      });
-
-    var rejectProfile = function (event) {
+    },
+    rejectProfile = function (event) {
       $('potential').empty();
       $('potential-details').empty();
       loadProfile();
       // create instance of match and set reciprocal to false
     };
- 
+
   browseProfiles.loadProfile();
 });
+
 
 
 // var browse = load any random user profile (be sure to go through all profiles before randomly picking again)

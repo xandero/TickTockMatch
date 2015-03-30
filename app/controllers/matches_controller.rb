@@ -1,19 +1,22 @@
 class MatchesController < ApplicationController
 
-  def determine_user
-    if @user == @match[0].user1_id
-      @matchedUser = @match[0].user2_id
+  def determine_user( match )
+    if @user == match.user1_id
+      @matchedUser = match.user2_id
     else
-      @matchedUser = @match[0].user1_id
+      @matchedUser = match.user1_id
     end
   end
 
   def index
+
     @user = User.find_by :id => session[:user_id]
-    #@match = [] Create array of matches and then loop through to create divs and relevant IDs?
-    @match = Match.all.where(:user1_id || :user2_id => @user)
-   
-    determine_user
+    @matches = Match.where("user1_id = ? OR user2_id = ?", @user.id, @user.id)
+    @matched_users = []
+    # @matches.each do |match|
+    #   determine_user(match)
+    # end
+    render :json => { matches: @matches, current_user: @user.id }
   end
 
   def load_conversation

@@ -3,9 +3,9 @@ module ApplicationHelper
     links = "<li>#{ link_to('Home', root_path) }</li>"
     if @current_user.present?
       links += 
-      "<li>#{ link_to('Browse', profiles_path(@current_user.id)) }</li>
-      <li>#{ link_to('Settings', edit_user_path(@current_user.id)) }</li>
-      <li>#{ link_to('Matches', matches_path(@current_user.id)) }</li>
+      "<li>#{ link_to('Browse', profiles_path(@current_user)) }</li>
+      <li>#{ link_to('Settings', edit_user_path(@current_user)) }</li>
+      <li>#{ link_to('Matches', matches_path(@current_user)) }</li>
       <li>#{ link_to('Sign Out', login_path, :method => :delete) }</li>"
     else
       links += "<li>#{ link_to('Sign up', new_user_path) }</li>

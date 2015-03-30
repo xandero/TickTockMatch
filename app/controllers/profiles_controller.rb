@@ -7,6 +7,8 @@ respond_to :html, :js
     age_max = @user.age_max
     sexual_preference = @user.sexual_preference
     @potential_matches = User.all.where('age > ?', age_min).where('age < ?', age_max).where(:gender => sexual_preference )
+  
+    render :json => @potential_matches
   end
 
   def create
