@@ -42,8 +42,6 @@ class MatchesController < ApplicationController
   end
 
   def edit
-    # match.u1_question_answer = params[:myAnswer]
-    # match.u2_question_answer = params[:initiator_answer]
   end
 
   def update
@@ -54,5 +52,4 @@ class MatchesController < ApplicationController
     determine_user(@matchedUser)
     render :json => { matchedUserName: @matchedUser }
   end
-
 end

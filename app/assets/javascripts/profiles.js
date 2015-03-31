@@ -9,6 +9,10 @@ var conversations = {
     }, function (response) {
       manifest = response.manifest;
       conversation_id = response.id;
+      myQuestion = response.myQuestion;
+      theirQuestion = response.theirQuestion;
+      debugger;
+      $('#potential').append('<div id="my-question">' + myQuestion + '</div>');
       $('<div>', { id: 'conversation' }).append($('<input>', { id: 'my-message' })).appendTo('#potential');
       $('#conversation').append('<p><button id="post-message" data-id="' + conversation_id + '" data-match="' + matchId + '">Send message</button><div id="past-messages"></div></p>');
       $('#past-messages').html(manifest);
