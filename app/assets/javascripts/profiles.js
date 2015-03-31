@@ -11,8 +11,12 @@ var conversations = {
       conversation_id = response.id;
       myQuestion = response.myQuestion;
       theirQuestion = response.theirQuestion;
-      debugger;
-      $('#potential').append('<div id="my-question">' + myQuestion + '</div>');
+      myAnswer = response.myAnswer;
+      theirAnswer = response.theirAnswer;
+      $('#potential').append('<div id="my-question">My Question: ' + myQuestion + '</div>');
+      $('#potential').append('<div id="their-answer">Their Answer: ' + theirAnswer + '</div><br />');
+      $('#potential').append('<div id="their-question">Their Question: ' + theirQuestion + '</div>');
+      $('#potential').append('<div id="my-answer">My Answer: ' + myAnswer + '</div>');
       $('<div>', { id: 'conversation' }).append($('<input>', { id: 'my-message' })).appendTo('#potential');
       $('#conversation').append('<p><button id="post-message" data-id="' + conversation_id + '" data-match="' + matchId + '">Send message</button><div id="past-messages"></div></p>');
       $('#past-messages').html(manifest);
