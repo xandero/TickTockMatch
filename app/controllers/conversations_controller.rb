@@ -5,7 +5,8 @@ class ConversationsController < ApplicationController
 
   def create
     # match = Match.where( :id => params["data"]["matchId"] )
-    conversation = Conversation.new({ match_id: params["data"]["matchId"] })
+    binding.pry
+    conversation = Conversation.new({ match_id: params["data"]["match_id"] })
 
     if conversation.save
       render :json => { status: "Conversation saved OK" }

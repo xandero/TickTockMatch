@@ -29,9 +29,9 @@ var listMatches = function () {
       }
       $("#potential").append(html);
     });
-      
+
+    $('.matched').on('click', loadConversation);
   });
-  $('.matched').on('click', this.loadConversation);
 };
 
 var templates = {
@@ -46,7 +46,7 @@ var templates = {
     },
 
     viewMatches: function() {
-      var template = _.template("<div class='matched we-initiated' data-match='<%= id %>'><p>The profile photo of User <%= user_id %> goes here.</p></div>");
+      // var template = _.template("<div class='matched' data-match='<%= id %>'><p>The profile photo of User <%= user_id %> goes here.</p></div>");
       listMatches();
     }
 };
