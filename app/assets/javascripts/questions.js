@@ -1,8 +1,8 @@
 var viewQuestions = {
 
   getQuestions: function () {
-    $.get('/questions/extract', function(response) {
-      //viewQuestions.getQuestions = response
+    $.get('/questions', function(response) {
+      
       $('#my-question').val(u1_question)
       $('#my-answer').val(u1_answer)
       $('#their-question').val(u2_question)

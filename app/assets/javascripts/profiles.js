@@ -1,12 +1,29 @@
-$(document).ready(function() {
+var templates = {
 
-  var currentUser = $.get('/users/show');
+  browseProfiles: function() {
+    return _.template("<div class='visible-profile' data-profile='<%= id %>'><p>The profile photo of User <%= user_id %> goes here.</p></div>");
+  },
+
+  viewSettings: function() {
+    return _.template("<div class='matched we-initiated' data-match='<%= id %>'><p>The profile photo of User <%= user_id %> goes here.</p></div>");
+
+  },
+
+  viewMatches: function() {
+
+  }
+};
+
+$(document).ready(function() {
 
   var browseProfiles = {
     loadProfile: function() {
       $('#accept').on('click', 'button', this.acceptProfile);
       $('#reject').on('click', 'button', this.rejectProfile);
       $.get('/profiles', function(response) {
+        var thumb = response[0].thumbnail;
+      $("body").append("<img src=" + thumb + ">");
+
       });
     },
     showProfile: function() {
@@ -34,6 +51,37 @@ $(document).ready(function() {
     };
 
   browseProfiles.loadProfile();
+
+$("nav a").on("click", function (event) {
+  var $currentEl = $(this);
+  if ( $currentEl.hasClass("sign-out") ) {
+    return false;
+  }
+  event.preventDefault();
+  var url = $(this).attr("href");
+  // debugger;
+  $.get(url, function (response) {
+
+    // console.log(response);
+    var template = null;
+    switch ( $currentEl.text() ) {
+      case "Browse":
+        console.log( "Browse clicked" );
+        templates.browseProfiles(); 
+        break;
+      case "Settings":
+        // template =
+        console.log( "Settings clicked" );
+        break;
+      case "Matches":
+        // template =
+        console.log( "Matches clicked" );
+        break;
+      }
+      $("body").append(template);
+
+    });
+  });
 });
 
 

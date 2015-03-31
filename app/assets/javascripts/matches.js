@@ -6,8 +6,8 @@ $(document).ready(function() {
     $('.matched').on('click', this.loadConversation);
     $.get('/matches', function(response) {
       // debugger;
-      var template_first_user = _.template("<div class='matched we-initiated' data-match='<%= id %>'><p>We initiated with: <%= user_id %></p></div>");
-      var template_second_user = _.template("<div class='matched' data-match='<%= id %>'><p>They (<%= user_id %>) initiated with us</p></div>");
+      var template_first_user = _.template("<div class='matched we-initiated' data-match='<%= id %>'><p>I initiated this match with user <%= user_id %>.</p></div>");
+      var template_second_user = _.template("<div class='matched' data-match='<%= id %>'><p>User <%= user_id %> initiated this match with me.</p></div>");
       var current_user_id = response.current_user;
 
       _.each( response.matches, function (match) {
