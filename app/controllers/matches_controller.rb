@@ -12,11 +12,8 @@ class MatchesController < ApplicationController
 
     @user = User.find_by :id => session[:user_id]
     @matches = Match.where("user1_id = ? OR user2_id = ?", @user.id, @user.id)
-    @matched_users = []
-    # @matches.each do |match|
-    #   determine_user(match)
-    # end
-    render :json => { matches: @matches, current_user: @user.id }
+
+    render :json => { matches: @matches.to_json(:include => [:initiator, :recipricator]), current_user: @user.id }
   end
 
   def new
@@ -50,8 +47,11 @@ class MatchesController < ApplicationController
   def update
   end
 
-  def locate_match
-    match = Match.find params[:id]
+  def find_match
+    @matchedUser = params["data"]["matched_user"]
+    binding.pry
+    determine_user(@matchedUser)
+    render :json => { matchedUserName: @matchedUser }
   end
 
 end

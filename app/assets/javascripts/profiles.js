@@ -1,17 +1,49 @@
+var listMatches = function () {
+  clearPage();
+  $('.matched').on('click', this.loadConversation);
+  $.get('/matches', function(response) {
+    // debugger;
+    var template_first_user = _.template("<div class='matched we-initiated' data-match='<%= id %>'><p>I initiated this match with user <%= user_id %>.</p></div>");
+    var template_second_user = _.template("<div class='matched' data-match='<%= id %>'><p>User <%= user_id %> initiated this match with me.</p></div>");
+    var current_user_id = response.current_user;
+
+    var matches = JSON.parse(response.matches);
+    debugger;
+    _.each( matches, function (match) {
+      // console.log(match);
+      var html;
+      if ( current_user_id === match.user1_id ) {
+debugger;
+        html = template_first_user( { user_id: match.user2_id, id: match.id } );
+      } else {
+        html = template_second_user( { user_id: match.user1_id, id: match.id } );
+      }
+      $("#potential").append(html);
+    });
+// var template = _.template("<b><%- value %></b>");
+// template({value: '<script>'});
+  });
+};
 
 var templates = {
 
     browseProfiles: function() {
-        return _.template("<div class='visible-profile' data-profile='<%= id %>'><p>The profile photo of User <%= user_id %> goes here.</p></div>");
+      return _.template("<div class='visible-profile' data-profile='<%= id %>'><p>The profile photo of User <%= user_id %> goes here.</p></div>");
     },
 
     viewSettings: function() {
-        return _.template("<div class='matched we-initiated' data-match='<%= id %>'><p>The profile photo of User <%= user_id %> goes here.</p></div>");
+      _.template("<div class='my-settings'></div>");
     },
 
     viewMatches: function() {
-
+      var template = _.template("<div class='matched we-initiated' data-match='<%= id %>'><p>The profile photo of User <%= user_id %> goes here.</p></div>");
+      listMatches();
     }
+};
+
+var clearPage = function() {
+  $('#potential').empty();
+  $('#potential-details').empty();
 };
 
 var browseProfiles = {
@@ -22,14 +54,12 @@ var browseProfiles = {
         $.post('/matches', {
             data: { user2_id: matchedUserID }
         });
-        $('#potential').empty();
-        $('#potential-details').empty();
+        clearPage();
         browseProfiles.loadProfiles();
     },
 
     rejectProfile: function(event) {
-        $('#potential').empty();
-        $('#potential-details').empty();
+        clearPage();
         browseProfiles.loadProfiles();
         // create instance of match and set reciprocal to false
     },
@@ -59,7 +89,10 @@ var browseProfiles = {
     }
 };
 
-$("nav a").on("click", function(event) {
+$(document).ready(function() {
+  browseProfiles.loadProfiles();
+
+  $("nav a").on("click", function(event) {
     var $currentEl = $(this);
     if ($currentEl.hasClass("sign-out")) {
         return false;
@@ -67,53 +100,27 @@ $("nav a").on("click", function(event) {
     event.preventDefault();
     var url = $(this).attr("href");
     $.get(url, function(response) {
-
         // console.log(response);
         var template = null;
         switch ($currentEl.text()) {
             case "Browse":
-                console.log("Browse clicked");
                 templates.browseProfiles();
+                console.log("Browse clicked");
                 break;
             case "Settings":
-                // template =
+                templates.viewSettings();
                 console.log("Settings clicked");
                 break;
             case "Matches":
-                // template =
+                templates.viewMatches();
                 console.log("Matches clicked");
                 break;
+
         }
-        $("body").append(template);
-
+      $("body").append(template);
     });
-});
-
-$(document).ready(function() {
-  browseProfiles.loadProfiles();
-
-  var listMatches = function () {
-    $('.matched').on('click', this.loadConversation);
-    $.get('/matches', function(response) {
-      // debugger;
-      var template_first_user = _.template("<div class='matched we-initiated' data-match='<%= id %>'><p>I initiated this match with user <%= user_id %>.</p></div>");
-      var template_second_user = _.template("<div class='matched' data-match='<%= id %>'><p>User <%= user_id %> initiated this match with me.</p></div>");
-      var current_user_id = response.current_user;
-
-      _.each( response.matches, function (match) {
-        // console.log(match);
-        var html;
-        if ( current_user_id === match.user1_id ) {
-          html = template_first_user( { user_id: match.user2_id, id: match.id } );
-        } else {
-          html = template_second_user( { user_id: match.user1_id, id: match.id } );
-        }
-        $("body").append(html);
-      });
-// var template = _.template("<b><%- value %></b>");
-// template({value: '<script>'});
-    });
-  };
+    return false;
+  });
 });
 
 
