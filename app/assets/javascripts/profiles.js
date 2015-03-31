@@ -1,27 +1,33 @@
 var conversations = {
 
-
   loadConversation: function () {
     clearPage();
     matchId = $(this).data('match');
+    var conversation_id = null;
     $.post('/conversations', {
       data: { match_id: matchId }
-  });
-
-  $('<div>', { id: 'conversation' }).append($('<input>', { id: 'my-message' })).appendTo('#potential');
-  $('#conversation').append('<p><button id="post-message">Send message</button></p>');
-  $('#post-message').on('click', conversations.postMessage);
+    }, function (response) {
+      // debugger;
+      conversation_id = response.id;
+      $('<div>', { id: 'conversation' }).append($('<input>', { id: 'my-message' })).appendTo('#potential');
+      $('#conversation').append('<p><button id="post-message" data-id="' + conversation_id + '" data-match="' + matchId + '">Send message</button></p>');
+      $('#post-message').on('click', conversations.postMessage);
+    });
   },
 
   postMessage: function () {
-    newMessage = $('#my-message').val();  
-      $.put('/conversations', function() {
-        data: { newMessage: newMessage,
-          match_id: matchId }
-      })
+    var self = this;
+    newMessage = $('#my-message').val();
+    $.ajax({
+      url: '/conversations/' + $(self).data('id'),
+      type: 'PUT',
+      data: { 
+        match_id: $(self).data('match'),
+        newMessage: newMessage 
+      }
     });
-  };
-}
+  }
+};
 
 var listMatches = function () {
   clearPage();
