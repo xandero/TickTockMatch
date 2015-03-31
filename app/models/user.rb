@@ -39,8 +39,4 @@ class User < ActiveRecord::Base
                        :on => :create
   has_secure_password
 
-  def age
-    (Date.today - dob).to_i / 365 unless dob.nil?
-  end
-
 end

@@ -12,7 +12,7 @@ class UsersController < ApplicationController
   def create
 
     @user = User.create user_params
-    @user.age = age
+    
     if @user.save
       # logs user in automatically upon signup
       session[:user_id] = @user.id
@@ -33,6 +33,8 @@ class UsersController < ApplicationController
   def update
     user = User.find params[:id]
     user.update user_params
+    user.age = (Date.today.to_s(:db).to_i - user_params['dob'].to_i)
+    user.save
     redirect_to user_path
   end
 

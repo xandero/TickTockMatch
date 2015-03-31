@@ -7,7 +7,6 @@ var templates = {
 
     viewSettings: function() {
         return _.template("<div class='matched we-initiated' data-match='<%= id %>'><p>The profile photo of User <%= user_id %> goes here.</p></div>");
-
     },
 
     viewMatches: function() {
@@ -17,84 +16,105 @@ var templates = {
 
 var browseProfiles = {
 
-        loadProfiles: function() {
+    acceptProfile: function(event) {
+        matchedUserID = $('#potential-details').data('potentialId');
+        debugger;
+        $.post('/matches', {
+            data: { user2_id: matchedUserID }
+        });
+        $('#potential').empty();
+        $('#potential-details').empty();
+        browseProfiles.loadProfiles();
+    },
 
-            $.getJSON('/profiles', function(response) {
-             
-                    var thumb = response[0].thumbnail;
-                    var potentialId = response[0].id;
-                    var potentialName = response[0].name;
+    rejectProfile: function(event) {
+        $('potential').empty();
+        $('potential-details').empty();
+        browseProfiles.loadProfiles();
+        // create instance of match and set reciprocal to false
+    },
 
-                    $('<div>', {
-                        id: 'potential'
-                    }).append($('<div>', {
-                        id: 'potential-details'
-                    })).appendTo('#container');
-                    
-                    $('#potential').append("<img src=" + thumb + " id=" + potentialId + ">");
-                    $('#potential-details').append("<p>" + potentialName + "</p>");
-                    $('#potential-details').append('<button id="accept">Accept</button>');
-                    $('#potential-details').append('<button id="reject">Reject</button>');
-                    $('#accept').on('click', 'button', this.acceptProfile);
-                    $('#reject').on('click', 'button', this.rejectProfile);
-                },
+    loadProfiles: function() {
+        $('.matched').empty();
+        $.getJSON('/profiles', function(response) {
+         
+            var thumb = response[0].thumbnail;
+            var potentialId = response[0].id;
+            var potentialName = response[0].name;
 
-                acceptProfile = function(event) {
-
-                    $.post('/matches/create', {
-                        data: {
-                            user2_id: $('#potentialID').val(),
-                            u2_question: u2_question.val()
-                        }
-                    });
-                    $('potential').empty();
-                    $('potential-details').empty();
-                    loadProfile();
-                },
-                rejectProfile = function(event) {
-                    $('potential').empty();
-                    $('potential-details').empty();
-                    loadProfiles();
-                    // create instance of match and set reciprocal to false
-                });
-        }
-      };
-
-    $("nav a").on("click", function(event) {
-        var $currentEl = $(this);
-        if ($currentEl.hasClass("sign-out")) {
-            return false;
-        }
-        event.preventDefault();
-        var url = $(this).attr("href");
+        $('<div>', { id: 'potential' }).append($('<div>', {
+            id: 'potential-details'
+        })).appendTo('#container');
+        // debugger;  
+        $('#potential-details').data('potentialId', potentialId);
         // debugger;
-        $.get(url, function(response) {
-
-            // console.log(response);
-            var template = null;
-            switch ($currentEl.text()) {
-                case "Browse":
-                    console.log("Browse clicked");
-                    templates.browseProfiles();
-                    break;
-                case "Settings":
-                    // template =
-                    console.log("Settings clicked");
-                    break;
-                case "Matches":
-                    // template =
-                    console.log("Matches clicked");
-                    break;
-            }
-            $("body").append(template);
+        $('#potential').append("<img src=" + thumb + ">");
+        $('#potential-details').append("<p>" + potentialName + "</p>");
+        $('#potential-details').append('<button id="accept">Accept</button>');
+        $('#potential-details').append('<button id="reject">Reject</button>');
+        $('#accept').on('click', browseProfiles.acceptProfile);
+        $('#reject').on('click', browseProfiles.rejectProfile);
 
         });
+    }
+};
+
+$("nav a").on("click", function(event) {
+    var $currentEl = $(this);
+    if ($currentEl.hasClass("sign-out")) {
+        return false;
+    }
+    event.preventDefault();
+    var url = $(this).attr("href");
+    $.get(url, function(response) {
+
+        // console.log(response);
+        var template = null;
+        switch ($currentEl.text()) {
+            case "Browse":
+                console.log("Browse clicked");
+                templates.browseProfiles();
+                break;
+            case "Settings":
+                // template =
+                console.log("Settings clicked");
+                break;
+            case "Matches":
+                // template =
+                console.log("Matches clicked");
+                break;
+        }
+        $("body").append(template);
+
     });
+});
 
 $(document).ready(function() {
   browseProfiles.loadProfiles();
-});
 
+  var listMatches = function () {
+    $('.matched').on('click', this.loadConversation);
+    $.get('/matches', function(response) {
+      // debugger;
+      var template_first_user = _.template("<div class='matched we-initiated' data-match='<%= id %>'><p>I initiated this match with user <%= user_id %>.</p></div>");
+      var template_second_user = _.template("<div class='matched' data-match='<%= id %>'><p>User <%= user_id %> initiated this match with me.</p></div>");
+      var current_user_id = response.current_user;
+
+      _.each( response.matches, function (match) {
+        // console.log(match);
+        var html;
+        if ( current_user_id === match.user1_id ) {
+          html = template_first_user( { user_id: match.user2_id, id: match.id } );
+        } else {
+          html = template_second_user( { user_id: match.user1_id, id: match.id } );
+        }
+        $("body").append(html);
+      });
+// var template = _.template("<b><%- value %></b>");
+// template({value: '<script>'});
+    });
+  };
+});
 
 
 // var browse = load any random user profile (be sure to go through all profiles before randomly picking again)

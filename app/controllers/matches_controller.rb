@@ -19,8 +19,27 @@ class MatchesController < ApplicationController
     render :json => { matches: @matches, current_user: @user.id }
   end
 
-  def load_conversation
-    # redirect_to conversation_path(conversation_id)
+  def new
+    @match = Match.new 
+  end
+
+  def create
+    @user = User.find_by :id => session[:user_id]
+    matchedUser = User.where( :id =>  params["data"]["user2_id"])
+   
+    match = Match.new({
+      user2_id:  params["data"]["user2_id"],
+      user1_id: @user.id,
+      u1_question: @user.question,
+      u2_question: matchedUser[0].question
+    })
+
+    if Match.save
+      render :json => { status: "200 OK" }
+    else 
+      render :json => { status: "ERROR!" }
+    end
+
   end
 
   def edit
@@ -28,15 +47,7 @@ class MatchesController < ApplicationController
     # match.u2_question_answer = params[:initiator_answer]
   end
 
-  def create
-    determine_user
-    @user = User.find_by :id => session[:user_id]
-    match = Match.new 
-    match.user1_id = @user.id
-    match.user2_id = @matchedUser.id
-    match.u1_question = @user.question
-    match.u2_question = @matchedUser.question
-    match.save
+  def update
   end
 
   def locate_match
