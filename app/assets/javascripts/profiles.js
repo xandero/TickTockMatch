@@ -18,6 +18,13 @@ $(document).ready(function() {
 
   var browseProfiles = {
     loadProfile: function() {
+      $('<div>', { 
+          id: 'potential'
+      }).append( $('<div>', { 
+          id: 'potential-details'
+      })).appendTo('#container');
+      $('#potential-details').append('<button id="accept">Accept</button>');
+      $('#potential-details').append('<button id="reject">Reject</button>');
       $('#accept').on('click', 'button', this.acceptProfile);
       $('#reject').on('click', 'button', this.rejectProfile);
       $.get('/profiles', function(response) {
