@@ -26,7 +26,7 @@
 class User < ActiveRecord::Base
 
   # attr_accessible :photo
-  mount_uploader :photo, PhotoUploader
+  # mount_uploader :photo, PhotoUploader
 
   has_many :matches
   has_many :conversations, through: :matches

@@ -1,16 +1,26 @@
+var loadConversation = function () {
+  clearPage();
+    $('<div>', { 
+      id: 'conversation' }).append($('<input>', {
+      id: 'my-message'
+  })).appendTo('#container');
+      matchId = $(this).data('match');
+        debugger;
+        $.post('/conversations', {
+            data: { match_id: matchId }
+        });
+      console.log('hurro');
+};
+
 var listMatches = function () {
   clearPage();
-  $('.matched').on('click', this.loadConversation);
   $.get('/matches', function(response) {
-    // debugger;
-    var template_first_user = _.template("<div class='matched we-initiated' data-match='<%= id %>'><p>I initiated this match with <%= match_name %>.</p></div>");
+    var template_first_user = _.template("<div class='matched' data-match='<%= id %>'><p>I initiated this match with <%= match_name %>.</p></div>");
     var template_second_user = _.template("<div class='matched' data-match='<%= id %>'><p><%= match_name %> initiated this match with me.</p></div>");
     var current_user_id = response.current_user;
-
     var matches = JSON.parse(response.matches);
-    debugger;
+    
     _.each( matches, function (match) {
-      // console.log(match);
       var html;
       if ( current_user_id === match.initiator.id ) {
         html = template_first_user( { match_name: match.recipricator.name, id: match.id } );
@@ -19,15 +29,16 @@ var listMatches = function () {
       }
       $("#potential").append(html);
     });
-// var template = _.template("<b><%- value %></b>");
-// template({value: '<script>'});
+      
   });
+  $('.matched').on('click', this.loadConversation);
 };
 
 var templates = {
 
-    browseProfiles: function() {
-      return _.template("<div class='visible-profile' data-profile='<%= id %>'><p>The profile photo of User <%= user_id %> goes here.</p></div>");
+    viewProfiles: function() {
+       _.template("<div class='visible-profile' data-profile='<%= id %>'><p>The profile photo of User <%= user_id %> goes here.</p></div>");
+      browseProfiles.loadProfiles();
     },
 
     viewSettings: function() {
@@ -60,34 +71,28 @@ var browseProfiles = {
     rejectProfile: function(event) {
         clearPage();
         browseProfiles.loadProfiles();
-        // create instance of match and set reciprocal to false
     },
 
     loadProfiles: function() {
         $('.matched').empty();
         $.getJSON('/profiles', function(response) {
-
             var thumb = response[0].thumbnail;
             var potentialId = response[0].id;
             var potentialName = response[0].name;
-
         $('<div>', { id: 'potential' }).append($('<div>', {
             id: 'potential-details'
         })).appendTo('#container');
-        // debugger;  
+
         $('#potential-details').data('potentialId', potentialId);
-        // debugger;
         $('#potential').append("<img src=" + thumb + ">");
         $('#potential-details').append("<p>" + potentialName + "</p>");
         $('#potential-details').append('<button id="accept">Accept</button>');
         $('#potential-details').append('<button id="reject">Reject</button>');
         $('#accept').on('click', browseProfiles.acceptProfile);
         $('#reject').on('click', browseProfiles.rejectProfile);
-
         });
     }
 };
-
 $(document).ready(function() {
   browseProfiles.loadProfiles();
 
@@ -103,7 +108,7 @@ $(document).ready(function() {
         var template = null;
         switch ($currentEl.text()) {
             case "Browse":
-                templates.browseProfiles();
+                templates.viewProfiles();
                 console.log("Browse clicked");
                 break;
             case "Settings":
@@ -114,7 +119,6 @@ $(document).ready(function() {
                 templates.viewMatches();
                 console.log("Matches clicked");
                 break;
-
         }
       $("body").append(template);
     });
