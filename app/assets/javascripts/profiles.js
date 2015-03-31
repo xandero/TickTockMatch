@@ -18,7 +18,7 @@ var browseProfiles = {
 
     acceptProfile: function(event) {
         matchedUserID = $('#potential-details').data('potentialId');
-        debugger;
+        // debugger;
         $.post('/matches', {
             data: { user2_id: matchedUserID }
         });
@@ -28,8 +28,8 @@ var browseProfiles = {
     },
 
     rejectProfile: function(event) {
-        $('potential').empty();
-        $('potential-details').empty();
+        $('#potential').empty();
+        $('#potential-details').empty();
         browseProfiles.loadProfiles();
         // create instance of match and set reciprocal to false
     },
@@ -37,7 +37,7 @@ var browseProfiles = {
     loadProfiles: function() {
         $('.matched').empty();
         $.getJSON('/profiles', function(response) {
-         
+
             var thumb = response[0].thumbnail;
             var potentialId = response[0].id;
             var potentialName = response[0].name;

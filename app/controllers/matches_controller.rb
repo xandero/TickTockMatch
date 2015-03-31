@@ -26,7 +26,7 @@ class MatchesController < ApplicationController
   def create
     @user = User.find_by :id => session[:user_id]
     matchedUser = User.where( :id =>  params["data"]["user2_id"])
-   
+    
     match = Match.new({
       user2_id:  params["data"]["user2_id"],
       user1_id: @user.id,
@@ -34,7 +34,7 @@ class MatchesController < ApplicationController
       u2_question: matchedUser[0].question
     })
 
-    if Match.save
+    if match.save
       render :json => { status: "200 OK" }
     else 
       render :json => { status: "ERROR!" }
