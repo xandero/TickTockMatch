@@ -1,15 +1,20 @@
+
+
 var loadConversation = function () {
-  clearPage();
-    $('<div>', { 
-      id: 'conversation' }).append($('<input>', {
-      id: 'my-message'
-  })).appendTo('#container');
-      matchId = $(this).data('match');
+  matchId = $(this).data('match');
         debugger;
         $.post('/conversations', {
             data: { match_id: matchId }
         });
-      console.log('hurro');
+  clearPage();
+    $('<div>', { id: 'conversation' }).append($('<input>', { id: 'my-message' })).appendTo('#potential');
+    $('#conversation').append('<p><button id="post-message">Send message</button></p>');
+    $('#post-message').on('click', function () {
+      $.put('/conversations')
+        
+    });
+
+    
 };
 
 var listMatches = function () {
@@ -51,14 +56,10 @@ var templates = {
     }
 };
 
-var clearPage = function() {
-  $('#potential').empty();
-  $('#potential-details').empty();
-};
-
 var browseProfiles = {
 
     acceptProfile: function(event) {
+        clearPage();
         matchedUserID = $('#potential-details').data('potentialId');
         // debugger;
         $.post('/matches', {
@@ -74,6 +75,7 @@ var browseProfiles = {
     },
 
     loadProfiles: function() {
+        clearPage();
         $('.matched').empty();
         $.getJSON('/profiles', function(response) {
             var thumb = response[0].thumbnail;
@@ -93,6 +95,12 @@ var browseProfiles = {
         });
     }
 };
+
+var clearPage = function() {
+  $('#potential').empty();
+  $('#potential-details').empty();
+};
+
 $(document).ready(function() {
   browseProfiles.loadProfiles();
 

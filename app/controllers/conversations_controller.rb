@@ -4,14 +4,15 @@ class ConversationsController < ApplicationController
   end
 
   def create
-    # match = Match.where( :id => params["data"]["matchId"] )
-    binding.pry
-    conversation = Conversation.new({ match_id: params["data"]["match_id"] })
-
-    if conversation.save
-      render :json => { status: "Conversation saved OK" }
-    else 
-      render :json => { status: "Conversation save error" }
+    if Conversation.where("match_id ?", params["data"]["match_id"] )
+      render :json => { status: "This conversation has already been created." }
+    else
+      conversation = Conversation.new({ match_id: params["data"]["match_id"] })
+      if conversation.save
+        render :json => { status: "Conversation saved OK" }
+      else 
+        render :json => { status: "Conversation save error" }
+      end
     end
   end
 

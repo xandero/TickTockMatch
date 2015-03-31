@@ -41,8 +41,8 @@
       <%= f.number_field :distance_max, :min => '1', :max => '500' %>
     </div>
     <div>
-      <%= f.file_field :photo %>
-      <%  f.hidden_field(:photo_cache) %>
+      <%= f.label :photo, "Photo URL" %>
+      <%  f.text_field :photo %>
     </div>
   </div>
 
