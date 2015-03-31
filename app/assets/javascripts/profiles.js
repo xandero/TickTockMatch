@@ -2,8 +2,6 @@ var conversations = {
 
   loadConversation: function () {
     clearPage();
-
-
     matchId = $(this).data('match');
     var conversation_id = null;
     $.post('/conversations', {
@@ -19,7 +17,7 @@ var conversations = {
   },
 
   postMessage: function () {
-    var self = this;
+    self = this;
     newMessage = $('#my-message').val();
     $.ajax({
       url: '/conversations/' + $(self).data('id'),
@@ -62,7 +60,7 @@ var templates = {
     },
 
     viewSettings: function() {
-      _.template("<div class='my-settings'></div>");
+
     },
 
     viewMatches: function() {
@@ -95,15 +93,17 @@ var browseProfiles = {
         $.getJSON('/profiles', function(response) {
             var thumb = response[0].thumbnail;
             var potentialId = response[0].id;
-            var potentialName = response[0].name;
+            var Name = response[0].name;
+            var Age = response[0].age;
+            var City = response[0].location;
         $('<div>', { id: 'potential' }).append($('<div>', {
             id: 'potential-details'
         })).appendTo('#container');
 
         $('#potential-details').data('potentialId', potentialId);
         $('#potential').append("<img src=" + thumb + ">");
-        $('#potential-details').append("<p>" + potentialName + "</p>");
-        $('#potential-details').append('<button id="accept">Accept</button>');
+        $('#potential-details').append("<p>" + Name + ", " + Age + "</p>" + City + "<br />");
+        $('#potential-details').append('<br /><button id="accept">Accept</button>');
         $('#potential-details').append('<button id="reject">Reject</button>');
         $('#accept').on('click', browseProfiles.acceptProfile);
         $('#reject').on('click', browseProfiles.rejectProfile);

@@ -21,9 +21,11 @@ class ConversationsController < ApplicationController
   end
 
   def update
+    @user = User.find_by :id => session[:user_id]
+    name = @user.name
     conversation = Conversation.where(:match_id => params["match_id"] )
     conversation[0].message_manifest = conversation[0].message_manifest || ""
-    str = params["newMessage"]
+    str = name + ': ' + params["newMessage"]
     str += "<br />" 
     str += conversation[0].message_manifest
     conversation[0].update( :message_manifest => str ) 
