@@ -3,8 +3,8 @@ var listMatches = function () {
   $('.matched').on('click', this.loadConversation);
   $.get('/matches', function(response) {
     // debugger;
-    var template_first_user = _.template("<div class='matched we-initiated' data-match='<%= id %>'><p>I initiated this match with user <%= user_id %>.</p></div>");
-    var template_second_user = _.template("<div class='matched' data-match='<%= id %>'><p>User <%= user_id %> initiated this match with me.</p></div>");
+    var template_first_user = _.template("<div class='matched we-initiated' data-match='<%= id %>'><p>I initiated this match with <%= match_name %>.</p></div>");
+    var template_second_user = _.template("<div class='matched' data-match='<%= id %>'><p><%= match_name %> initiated this match with me.</p></div>");
     var current_user_id = response.current_user;
 
     var matches = JSON.parse(response.matches);
@@ -12,11 +12,10 @@ var listMatches = function () {
     _.each( matches, function (match) {
       // console.log(match);
       var html;
-      if ( current_user_id === match.user1_id ) {
-debugger;
-        html = template_first_user( { user_id: match.user2_id, id: match.id } );
+      if ( current_user_id === match.initiator.id ) {
+        html = template_first_user( { match_name: match.recipricator.name, id: match.id } );
       } else {
-        html = template_second_user( { user_id: match.user1_id, id: match.id } );
+        html = template_second_user( { match_name: match.initiator.name, id: match.id } );
       }
       $("#potential").append(html);
     });
