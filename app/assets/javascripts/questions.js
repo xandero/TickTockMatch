@@ -3,10 +3,10 @@ var viewQuestions = {
   getQuestions: function () {
     $.get('/questions', function(response) {
       
-      $('#my-question').val(u1_question)
-      $('#my-answer').val(u1_answer)
-      $('#their-question').val(u2_question)
-      $('#their-answer').val(u2_answer)
+      $('#my-question').val(response.u1_question)
+      $('#my-answer').val(response.u1_answer)
+      $('#their-question').val(response.u2_question)
+      $('#their-answer').val(response.u2_answer)
     })
   },
   acceptAnswer: function () {
@@ -40,6 +40,9 @@ $(document).ready(function () {
   $('#submit-answer').on('click', 'button', viewQuestions.updateMatch);
   viewQuestions.getQuestions();
 });
+
+
+
 
 // create an event handler:
   

@@ -1,94 +1,98 @@
+
 var templates = {
 
-  browseProfiles: function() {
-    return _.template("<div class='visible-profile' data-profile='<%= id %>'><p>The profile photo of User <%= user_id %> goes here.</p></div>");
-  },
+    browseProfiles: function() {
+        return _.template("<div class='visible-profile' data-profile='<%= id %>'><p>The profile photo of User <%= user_id %> goes here.</p></div>");
+    },
 
-  viewSettings: function() {
-    return _.template("<div class='matched we-initiated' data-match='<%= id %>'><p>The profile photo of User <%= user_id %> goes here.</p></div>");
+    viewSettings: function() {
+        return _.template("<div class='matched we-initiated' data-match='<%= id %>'><p>The profile photo of User <%= user_id %> goes here.</p></div>");
 
-  },
+    },
 
-  viewMatches: function() {
+    viewMatches: function() {
 
-  }
+    }
 };
 
-$(document).ready(function() {
+var browseProfiles = {
 
-  var browseProfiles = {
-    loadProfile: function() {
-      $('<div>', { 
-          id: 'potential'
-      }).append( $('<div>', { 
-          id: 'potential-details'
-      })).appendTo('#container');
-      $('#potential-details').append('<button id="accept">Accept</button>');
-      $('#potential-details').append('<button id="reject">Reject</button>');
-      $('#accept').on('click', 'button', this.acceptProfile);
-      $('#reject').on('click', 'button', this.rejectProfile);
-      $.get('/profiles', function(response) {
-        var thumb = response[0].thumbnail;
-      $("body").append("<img src=" + thumb + ">");
+        loadProfiles: function() {
 
-      });
-    },
-    showProfile: function() {
-      $('#potential').html(response.photo);
-      $('#potential-details').html(response.name, response.age);
-      },
-    },
-    acceptProfile = function (event) {
+            $.getJSON('/profiles', function(response) {
+             
+                    var thumb = response[0].thumbnail;
+                    var potentialId = response[0].id;
+                    var potentialName = response[0].name;
 
-      $.post('/matches/create', {
-        data: {
-          user2_id: $('#potentialID').val(),
-          u2_question: u2_question.val()
+                    $('<div>', {
+                        id: 'potential'
+                    }).append($('<div>', {
+                        id: 'potential-details'
+                    })).appendTo('#container');
+                    
+                    $('#potential').append("<img src=" + thumb + " id=" + potentialId + ">");
+                    $('#potential-details').append("<p>" + potentialName + "</p>");
+                    $('#potential-details').append('<button id="accept">Accept</button>');
+                    $('#potential-details').append('<button id="reject">Reject</button>');
+                    $('#accept').on('click', 'button', this.acceptProfile);
+                    $('#reject').on('click', 'button', this.rejectProfile);
+                },
+
+                acceptProfile = function(event) {
+
+                    $.post('/matches/create', {
+                        data: {
+                            user2_id: $('#potentialID').val(),
+                            u2_question: u2_question.val()
+                        }
+                    });
+                    $('potential').empty();
+                    $('potential-details').empty();
+                    loadProfile();
+                },
+                rejectProfile = function(event) {
+                    $('potential').empty();
+                    $('potential-details').empty();
+                    loadProfiles();
+                    // create instance of match and set reciprocal to false
+                });
         }
-      });
-      $('potential').empty();
-      $('potential-details').empty();
-      loadProfile();
-    },
-    rejectProfile = function (event) {
-      $('potential').empty();
-      $('potential-details').empty();
-      loadProfile();
-      // create instance of match and set reciprocal to false
-    };
+      };
 
-  browseProfiles.loadProfile();
+    $("nav a").on("click", function(event) {
+        var $currentEl = $(this);
+        if ($currentEl.hasClass("sign-out")) {
+            return false;
+        }
+        event.preventDefault();
+        var url = $(this).attr("href");
+        // debugger;
+        $.get(url, function(response) {
 
-$("nav a").on("click", function (event) {
-  var $currentEl = $(this);
-  if ( $currentEl.hasClass("sign-out") ) {
-    return false;
-  }
-  event.preventDefault();
-  var url = $(this).attr("href");
-  // debugger;
-  $.get(url, function (response) {
+            // console.log(response);
+            var template = null;
+            switch ($currentEl.text()) {
+                case "Browse":
+                    console.log("Browse clicked");
+                    templates.browseProfiles();
+                    break;
+                case "Settings":
+                    // template =
+                    console.log("Settings clicked");
+                    break;
+                case "Matches":
+                    // template =
+                    console.log("Matches clicked");
+                    break;
+            }
+            $("body").append(template);
 
-    // console.log(response);
-    var template = null;
-    switch ( $currentEl.text() ) {
-      case "Browse":
-        console.log( "Browse clicked" );
-        templates.browseProfiles(); 
-        break;
-      case "Settings":
-        // template =
-        console.log( "Settings clicked" );
-        break;
-      case "Matches":
-        // template =
-        console.log( "Matches clicked" );
-        break;
-      }
-      $("body").append(template);
-
+        });
     });
-  });
+
+$(document).ready(function() {
+  browseProfiles.loadProfiles();
 });
 
 
