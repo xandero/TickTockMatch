@@ -1,7 +1,10 @@
 class ConversationsController < ApplicationController
 
   def index
-
+    @user = User.find_by :id => session[:user_id]
+    # find questions from each user then render as JSON and return.
+    # Create and populate question divs on the page.
+    # Create answer input box and $.post to update answer in model
   end
 
   def create

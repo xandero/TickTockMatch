@@ -51,7 +51,6 @@ class MatchesController < ApplicationController
 
   def find_match
     @matchedUser = params["data"]["matched_user"]
-    binding.pry
     determine_user(@matchedUser)
     render :json => { matchedUserName: @matchedUser }
   end
