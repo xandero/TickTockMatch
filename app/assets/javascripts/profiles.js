@@ -2,15 +2,18 @@ var conversations = {
 
   loadConversation: function () {
     clearPage();
+
+
     matchId = $(this).data('match');
     var conversation_id = null;
     $.post('/conversations', {
       data: { match_id: matchId }
     }, function (response) {
-      // debugger;
+      manifest = response.manifest;
       conversation_id = response.id;
       $('<div>', { id: 'conversation' }).append($('<input>', { id: 'my-message' })).appendTo('#potential');
-      $('#conversation').append('<p><button id="post-message" data-id="' + conversation_id + '" data-match="' + matchId + '">Send message</button></p>');
+      $('#conversation').append('<p><button id="post-message" data-id="' + conversation_id + '" data-match="' + matchId + '">Send message</button><div id="past-messages"></div></p>');
+      $('#past-messages').html(manifest);
       $('#post-message').on('click', conversations.postMessage);
     });
   },
