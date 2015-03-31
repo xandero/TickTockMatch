@@ -17,6 +17,9 @@ class ConversationsController < ApplicationController
   end
 
   def update
-   # this is where we take value from conversation.js and append to the message manifest
+    conversation = Conversation.where("match_id ?", params["data"]["match_id"] )
+    conversation.message_manifest += params["data"]["newMessage"]
+    conversation.save
+    binding.pry
   end
 end

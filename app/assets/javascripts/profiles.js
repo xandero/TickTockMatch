@@ -1,21 +1,27 @@
+var conversations = {
 
 
-var loadConversation = function () {
-  matchId = $(this).data('match');
-        debugger;
-        $.post('/conversations', {
-            data: { match_id: matchId }
-        });
-  clearPage();
-    $('<div>', { id: 'conversation' }).append($('<input>', { id: 'my-message' })).appendTo('#potential');
-    $('#conversation').append('<p><button id="post-message">Send message</button></p>');
-    $('#post-message').on('click', function () {
-      $.put('/conversations')
-        
+  loadConversation: function () {
+    clearPage();
+    matchId = $(this).data('match');
+    $.post('/conversations', {
+      data: { match_id: matchId }
+  });
+
+  $('<div>', { id: 'conversation' }).append($('<input>', { id: 'my-message' })).appendTo('#potential');
+  $('#conversation').append('<p><button id="post-message">Send message</button></p>');
+  $('#post-message').on('click', conversations.postMessage);
+  },
+
+  postMessage: function () {
+    newMessage = $('#my-message').val();  
+      $.put('/conversations', function() {
+        data: { newMessage: newMessage,
+          match_id: matchId }
+      })
     });
-
-    
-};
+  };
+}
 
 var listMatches = function () {
   clearPage();
@@ -35,7 +41,7 @@ var listMatches = function () {
       $("#potential").append(html);
     });
 
-    $('.matched').on('click', loadConversation);
+    $('.matched').on('click', conversations.loadConversation);
   });
 };
 
