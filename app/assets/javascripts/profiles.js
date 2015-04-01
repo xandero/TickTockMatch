@@ -72,6 +72,7 @@ var conversations = {
       theirQuestion = response.theirQuestion;
       myAnswer = response.myAnswer;
       theirAnswer = response.theirAnswer;
+      debugger;
       el.append('<div id="my-question">My Question: ' + myQuestion + '</div><br />');
       el.append('<div id="their-answer">Their Answer: ' + theirAnswer + '</div><br />');
       el.append('<div id="their-question">Their Question: ' + theirQuestion + '</div><br />');
@@ -163,14 +164,14 @@ var browseProfiles = {
         $('<div>', { id: 'potential' }).append($('<div>', {
             id: 'potential-details'
         })).appendTo('#container');
-
-        $('#potential-details').data('potentialId', potentialId);
-        $('#potential').append("<img class='profile-photo' src=" + thumb + ">");
-        $('#potential-details').append(Name + ", " + Age + "<br />" + City + "<br />");
-        $('#potential').append('<br /><button class="button-primary" id="accept">Accept</button>');
-        $('#potential').append('<button class="button-primary" id="reject">Reject</button>');
-        $('#accept').on('click', browseProfiles.acceptProfile);
-        $('#reject').on('click', browseProfiles.rejectProfile);
+        debugger;
+          $('#potential-details').data('potentialId', potentialId);
+          $('#potential').append("<img class='profile-photo' src=" + thumb + ">");
+          $('#potential-details').prepend(Name + ", " + Age + "<br />" + City + "<br />");
+          $('#potential').append('<br /><button class="button-primary" id="accept">Accept</button>');
+          $('#potential').append('<button class="button-primary" id="reject">Reject</button>');
+          $('#accept').on('click', browseProfiles.acceptProfile);
+          $('#reject').on('click', browseProfiles.rejectProfile);
         });
     }
 };

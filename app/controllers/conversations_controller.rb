@@ -1,8 +1,9 @@
 class ConversationsController < ApplicationController
 
   def create
-    binding.pry
+    
     @user = User.find_by :id => session[:user_id]    
+
     match = Match.find params["data"]["match_id"]
 
     if match.user1_id != @user.id
@@ -43,7 +44,8 @@ class ConversationsController < ApplicationController
   def update
     @user = User.find_by :id => session[:user_id]
     name = @user.name
-    conversation = Conversation.where( match )
+    conversation = Conversation.where( :match_id => params['match_id'] )
+
     conversation[0].message_manifest = conversation[0].message_manifest || ""
     str = name + ': ' + params["newMessage"]
     str += "<br />" 
