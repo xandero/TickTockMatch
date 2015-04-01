@@ -1,22 +1,82 @@
+// var getStatus = function () {
+//   var matchId = $(this).data('match');
+
+// debugger;
+//   return $.get('/matches/' + matchId + '/status', matchId).done(function (status) {
+//     //window.status = status;
+//   });
+// }
+
+// getStatus('foo').done(function (status) {
+//   if (status.rejected) {
+//     conversation.reviewAnswer();
+//   }
+// })
+
 var conversations = {
 
-  loadConversation: function () {
+  acceptAnswer: function (match) {
+
+
+  },
+
+  rejectAnswer: function (match) {
+    debugger;
+    $.post('/matches/approve_reject', {
+      data: { match_id: match,
+        questionStatus: rejected }
+    })
+
+  },
+
+  reviewAnswer: function (match) {
     clearPage();
-    matchId = $(this).data('match');
+    var myQuestion = null;
+    var theirAnswer = null; 
+    conversations.approval = null;
+    $.post('/matches/review', {
+      data: { match_id: match }
+    }, function (response) {
+      myQuestion = response.myQuestion;
+      theirAnswer = response.theirAnswer;
+      el = $('#potential');
+      el.append('<div id="my-question">My Question: ' + myQuestion + '</div><br />');
+      el.append('<div id="their-answer">Their Answer: ' + theirAnswer + '</div><br />');
+      el.append('<p><button id="approve-answer" data-match="' + match + '">Approve Answer</button>');
+      el.append('<p><button id="reject-answer" data-match="' + match + '">Reject Answer</button>');
+      $('#approve-answer').on('click', function() { conversations.acceptAnswer(match)} );
+      $('#reject-answer').on('click', function() {conversations.rejectAnswer(match)} );
+    });
+  },
+
+  loadConversation: function (event) {
+    clearPage();
+
+    // if conversation exists, render message manifest
+    // if conversation does not exist, render reviewAnswer
+
+    var matchId = $(event.currentTarget).data('match');
+
+    // conversations.reviewAnswer(matchId);
+
+    clearPage();
+
     var conversation_id = null;
+
     $.post('/conversations', {
       data: { match_id: matchId }
     }, function (response) {
+      el = $('#potential');
       manifest = response.manifest;
       conversation_id = response.id;
       myQuestion = response.myQuestion;
       theirQuestion = response.theirQuestion;
       myAnswer = response.myAnswer;
       theirAnswer = response.theirAnswer;
-      $('#potential').append('<div id="my-question">My Question: ' + myQuestion + '</div>');
-      $('#potential').append('<div id="their-answer">Their Answer: ' + theirAnswer + '</div><br />');
-      $('#potential').append('<div id="their-question">Their Question: ' + theirQuestion + '</div>');
-      $('#potential').append('<div id="my-answer">My Answer: ' + myAnswer + '</div>');
+      el.append('<div id="my-question">My Question: ' + myQuestion + '</div><br />');
+      el.append('<div id="their-answer">Their Answer: ' + theirAnswer + '</div><br />');
+      el.append('<div id="their-question">Their Question: ' + theirQuestion + '</div><br />');
+      el.append('<div id="my-answer">My Answer: ' + myAnswer + '</div>');
       $('<div>', { id: 'conversation' }).append($('<input>', { id: 'my-message' })).appendTo('#potential');
       $('#conversation').append('<p><button id="post-message" data-id="' + conversation_id + '" data-match="' + matchId + '">Send message</button><div id="past-messages"></div></p>');
       $('#past-messages').html(manifest);
@@ -57,7 +117,7 @@ var listMatches = function () {
     });
 
     $('.matched').on('click', conversations.loadConversation);
-  });
+    });
 };
 
 var templates = {
@@ -72,7 +132,6 @@ var templates = {
     },
 
     viewMatches: function() {
-      // var template = _.template("<div class='matched' data-match='<%= id %>'><p>The profile photo of User <%= user_id %> goes here.</p></div>");
       listMatches();
     }
 };
@@ -82,7 +141,6 @@ var browseProfiles = {
     acceptProfile: function(event) {
         clearPage();
         matchedUserID = $('#potential-details').data('potentialId');
-        // debugger;
         $.post('/matches', {
             data: { user2_id: matchedUserID }
         });
@@ -135,20 +193,16 @@ $(document).ready(function() {
     event.preventDefault();
     var url = $(this).attr("href");
     $.get(url, function(response) {
-        // console.log(response);
         var template = null;
         switch ($currentEl.text()) {
             case "Browse":
                 templates.viewProfiles();
-                console.log("Browse clicked");
                 break;
             case "Settings":
                 templates.viewSettings();
-                console.log("Settings clicked");
                 break;
             case "Matches":
                 templates.viewMatches();
-                console.log("Matches clicked");
                 break;
         }
       $("body").append(template);
@@ -157,26 +211,3 @@ $(document).ready(function() {
   });
 });
 
-
-// var browse = load any random user profile (be sure to go through all profiles before randomly picking again)
-//   check if browse == @current_user
-//   also check if any matches have @current_user && browse as user1_id and user2_id
-//   if either of the above are true, discard browse and loop back to beginning
-
-// once a valid profile has been found,
-// display the profile photo in '#potential'
-// display potentialUser.name and potentialUser.location in '#potential-details'
-
-// add event handler
-//   on 'click' '#accept'
-//     check if an instance of match exists with browse.id and potentialUser.id
-//     if true
-//       There is a match. Popup message "It's a match!"
-//       move on to load next profile
-//     else if false
-//       Match.new
-//       Populate all fields with relevant data
-//     end
-
-//   on 'click' '#reject'
-//     load next profile

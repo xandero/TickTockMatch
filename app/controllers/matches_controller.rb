@@ -8,6 +8,30 @@ class MatchesController < ApplicationController
     end
   end
 
+  def status
+    binding.pry
+  end
+
+  def review
+    @user = User.find_by :id => session[:user_id]
+    match = Match.find params["data"]["match_id"]
+
+    if match.user1_id != @user.id
+      myQuestion = match.u2_question
+      theirAnswer = match.u2_answer
+    else
+      myQuestion = match.u1_question
+      theirAnswer = match.u1_answer
+    end
+
+    to_return = {}
+    to_return['status'] = status if status
+    to_return['myQuestion'] = myQuestion
+    to_return['theirAnswer'] = theirAnswer if theirAnswer
+
+    render :json => to_return
+  end
+
   def index
 
     @user = User.find_by :id => session[:user_id]
@@ -41,7 +65,10 @@ class MatchesController < ApplicationController
     end
   end
 
-  def edit
+  def approve_reject
+
+binding.pry
+
   end
 
   def update
