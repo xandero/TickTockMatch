@@ -8,12 +8,68 @@
 </head>
 <body>
 
+<header class="cf">
+  <a href="#" id="navicon" class="closed">Qatcha &#9776;</a>
+</header>
+  
+<nav id="main-nav">
+
+  <a href="/" data-user-id='<%= @current_user.id %>'><div>Home</div></a>
+  <% if @current_user.present? %>
+    <a href="/profiles" data-user-id='<%= @current_user.id %>'><div>Browse Profiles</div></a>
+    <a href="/users/<%= @current_user.id %>" data-user-id='<%= @current_user.id %>'><div>Settings</div></a>
+    <a href="/matches" data-user-id='<%= @current_user.id %>'><div>My Matches</div></a>
+    <a href="/" data-user-id='<%= @current_user.id %>'><div>Logout</div></a>
+  <% else %>
+    <a href="/login" data-user-id='<%= @current_user.id %>'><div>Login</div></a>
+    <a href="/users/new" data-user-id='<%= @current_user.id %>'><div>Sign Up</div></a>
+  <% end %>
+
+</nav>
+
 <div id="container">
 
-<%== nav_menu %>
-<%= yield %>
+  <%= yield %>
 
 </div>
 
+<div id="wrap">
+  <section id="main">Qatch - a work in progress......</section>
+</div>
+
+<footer>
+  <div class="main-gradient">
+    
+  </div>  
+  &nbsp;
+</footer>
+
+<div class="dots">
+  <div class="fade-top">
+  </div>
+</div>
+
+<script>
+  $(document).ready(function() {
+      $('.fade').hide();
+    $('#navicon').click(function() {
+    
+    if($('#navicon').hasClass('closed')) {
+        $('body').animate({left: "-250px"}, 400).css({"overflow":"hidden"});
+      $('#main-nav').animate({right: "0"}, 400);
+      $(this).removeClass('closed').addClass('open').html('x');
+      $('.fade').fadeIn();
+    }
+    else if($('#navicon').hasClass('open')) {
+       $('body').animate({left: "0"}, 400).css({"overflow":"scroll"});
+      $('#main-nav').animate({right: "-250px"}, 400);
+      $(this).removeClass('open').addClass('closed').html('&#9776;');
+      $('.fade').fadeOut();
+    }
+    });
+  });
+</script>
+
 </body>
+
 </html>

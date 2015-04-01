@@ -17,7 +17,6 @@ var conversations = {
 
   acceptAnswer: function (match) {
 
-
   },
 
   rejectAnswer: function (match) {
@@ -101,8 +100,8 @@ var conversations = {
 var listMatches = function () {
   clearPage();
   $.get('/matches', function(response) {
-    var template_first_user = _.template("<div class='matched' data-match='<%= id %>'><p>I initiated this match with <%= match_name %>.</p></div>");
-    var template_second_user = _.template("<div class='matched' data-match='<%= id %>'><p><%= match_name %> initiated this match with me.</p></div>");
+    var template_first_user = _.template("<div class='matched' data-match='<%= id %>'>I initiated this match with <%= match_name %>.<br />");
+    var template_second_user = _.template("<div class='matched' data-match='<%= id %>'><%= match_name %> initiated this match with me.<br />");
     var current_user_id = response.current_user;
     var matches = JSON.parse(response.matches);
     
@@ -168,9 +167,9 @@ var browseProfiles = {
 
         $('#potential-details').data('potentialId', potentialId);
         $('#potential').append("<img src=" + thumb + ">");
-        $('#potential-details').append("<p>" + Name + ", " + Age + "</p>" + City + "<br />");
-        $('#potential-details').append('<br /><button id="accept">Accept</button>');
-        $('#potential-details').append('<button id="reject">Reject</button>');
+        $('#potential-details').append(Name + ", " + Age + "<br />" + City + "<br />");
+        $('#potential').append('<br /><button id="accept">Accept</button>');
+        $('#potential').append('<button id="reject">Reject</button>');
         $('#accept').on('click', browseProfiles.acceptProfile);
         $('#reject').on('click', browseProfiles.rejectProfile);
         });
@@ -192,16 +191,17 @@ $(document).ready(function() {
     }
     event.preventDefault();
     var url = $(this).attr("href");
+
     $.get(url, function(response) {
         var template = null;
         switch ($currentEl.text()) {
-            case "Browse":
+            case "Browse Profiles":
                 templates.viewProfiles();
                 break;
             case "Settings":
                 templates.viewSettings();
                 break;
-            case "Matches":
+            case "My Matches":
                 templates.viewMatches();
                 break;
         }
