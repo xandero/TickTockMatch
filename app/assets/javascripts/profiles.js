@@ -165,7 +165,7 @@ var browseProfiles = {
         })).appendTo('#container');
 
         $('#potential-details').data('potentialId', potentialId);
-        $('#potential').append("<img src=" + thumb + ">");
+        $('#potential').append("<img class='profile-photo' src=" + thumb + ">");
         $('#potential-details').append(Name + ", " + Age + "<br />" + City + "<br />");
         $('#potential').append('<br /><button class="button-primary" id="accept">Accept</button>');
         $('#potential').append('<button class="button-primary" id="reject">Reject</button>');
