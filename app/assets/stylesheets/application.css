@@ -17,7 +17,12 @@ footer .main-gradient {
 }
 
 #main {
-  color: red;
+  text-align: center; 
+  color: navy;
+}
+
+.user-input {
+  margin: 0.3em;
 }
 
 /* sticky footer from css-tricks.com */
@@ -34,7 +39,7 @@ footer {
   margin-top: -150px; /* negative value of footer height */
   height: 150px;
   clear:both;
- background: #363636; 
+  background: #363636;
 } 
 
 /* CLEAR FIX*/
@@ -536,7 +541,10 @@ there.
 
 /* General Styles */
 body {
-  background: #fefcf1;
+  background: url("http://data1.whicdn.com/images/64552179/original.jpg");
+  background-size:   cover;                      /* <------ */
+  background-repeat: no-repeat;
+  background-position: center center;
   color: #303030;
   font-family: 'Open Sans', sans-serif;
   position: relative;
@@ -562,13 +570,21 @@ html.js #fallback-nav {
       padding: 10px;
       text-decoration: none;
       color: #303030;
-      border: 1px solid #FF2929; }
+      border: 1px solid #599FB7; }
       #fallback-nav li a:hover, #fallback-nav li a.current {
         background: #fae590;
         border: 1px solid #e7bc0a; }
 
 header {
-  background: #FF2929;
+
+  background: rgb(179,220,237);
+  background: -moz-linear-gradient(left,  rgba(179,220,237,1) 0%, rgba(41,184,229,1) 50%, rgba(188,224,238,1) 100%);
+  background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(179,220,237,1)), color-stop(50%,rgba(41,184,229,1)), color-stop(100%,rgba(188,224,238,1)));
+  background: -webkit-linear-gradient(left,  rgba(179,220,237,1) 0%,rgba(41,184,229,1) 50%,rgba(188,224,238,1) 100%);
+  background: -o-linear-gradient(left,  rgba(179,220,237,1) 0%,rgba(41,184,229,1) 50%,rgba(188,224,238,1) 100%);
+  background: -ms-linear-gradient(left,  rgba(179,220,237,1) 0%,rgba(41,184,229,1) 50%,rgba(188,224,238,1) 100%);
+  background: linear-gradient(to right,  rgba(179,220,237,1) 0%,rgba(41,184,229,1) 50%,rgba(188,224,238,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b3dced', endColorstr='#bce0ee',GradientType=1 );
   padding: 20px;
   z-index: 0; }
 
@@ -591,7 +607,7 @@ h2 {
 article {
   margin-bottom: 30px;
   padding-bottom: 30px;
-  border-bottom: 5px solid #FF2929; }
+  border-bottom: 5px solid #599FB7; }
 
 .date {
   color: #999;
