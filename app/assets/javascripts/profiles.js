@@ -53,10 +53,14 @@ var conversations = {
 
     // if conversation exists, render message manifest
     // if conversation does not exist, render reviewAnswer
+    var matchId;
+    if ( event ) {
+      matchId = $(event.currentTarget).data('match');
+    } else {
+      matchId = $("body").data("match-id");
+    }
 
-    var matchId = $(event.currentTarget).data('match');
-
-    // conversations.reviewAnswer(matchId);
+    $("body").data("match-id", matchId);
 
     clearPage();
 
@@ -72,7 +76,7 @@ var conversations = {
       theirQuestion = response.theirQuestion;
       myAnswer = response.myAnswer;
       theirAnswer = response.theirAnswer;
-      debugger;
+      // debugger;
       el.append('<div id="my-question">My Question: ' + myQuestion + '</div><br />');
       el.append('<div id="their-answer">Their Answer: ' + theirAnswer + '</div><br />');
       el.append('<div id="their-question">Their Question: ' + theirQuestion + '</div><br />');
@@ -93,6 +97,9 @@ var conversations = {
       data: { 
         match_id: $(self).data('match'),
         newMessage: newMessage 
+      },
+      success: function () {
+        conversations.loadConversation();
       }
     });
   }
@@ -105,7 +112,7 @@ var listMatches = function () {
     var template_second_user = _.template("<div class='matched' data-match='<%= id %>'><%= match_name %> initiated this match with me.<br />");
     var current_user_id = response.current_user;
     var matches = JSON.parse(response.matches);
-    
+    // debugger;
     _.each( matches, function (match) {
       var html;
       if ( current_user_id === match.initiator.id ) {
@@ -164,14 +171,16 @@ var browseProfiles = {
         $('<div>', { id: 'potential' }).append($('<div>', {
             id: 'potential-details'
         })).appendTo('#container');
-        debugger;
-          $('#potential-details').data('potentialId', potentialId);
-          $('#potential').append("<img class='profile-photo' src=" + thumb + ">");
-          $('#potential-details').prepend(Name + ", " + Age + "<br />" + City + "<br />");
-          $('#potential').append('<br /><button class="button-primary" id="accept">Accept</button>');
-          $('#potential').append('<button class="button-primary" id="reject">Reject</button>');
-          $('#accept').on('click', browseProfiles.acceptProfile);
-          $('#reject').on('click', browseProfiles.rejectProfile);
+        // debugger;
+          if ( $(".update-profile").length == 0 ) {
+            $('#potential-details').data('potentialId', potentialId);
+            $('#potential').append("<img class='profile-photo' src=" + thumb + ">");
+            $('#potential-details').prepend(Name + ", " + Age + "<br />" + City + "<br />");
+            $('#potential').append('<br /><button class="button-primary" id="accept">Accept</button>');
+            $('#potential').append('<button class="button-primary" id="reject">Reject</button>');
+            $('#accept').on('click', browseProfiles.acceptProfile);
+            $('#reject').on('click', browseProfiles.rejectProfile);
+          }
         });
     }
 };
@@ -179,6 +188,10 @@ var browseProfiles = {
 var clearPage = function() {
   $('#potential').empty();
   $('#potential-details').empty();
+  // debugger;
+  if ( $(".update-profile").length === 0 && $(".edit_user").length !== 0 ) {
+    $('#container').empty();
+  }
 };
 
 $(document).ready(function() {

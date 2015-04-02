@@ -1,77 +1,83 @@
 <h2>Edit Settings</h2>
 
 <%= form_for @user, html: { multipart: true } do |f| %>
+  
   <div class="row">
-    <div>
-      <%= f.label :name, "Username", :class => "one columns" %>
+    <div class="two columns">
+      <%= f.label :name, "Username", :class => "username" %>
     </div>
-    <div class="user-input">
-      <%= f.text_field :name, :class => "two columns", :disabled => "true" %>
+    <div class="two columns">
+      <%= f.text_field :name, :disabled => "true" %>
     </div>
-    <div>
-      <%= f.label :email, "Email", :title => 'Enter your email address.', :class => "one columns" %>
+    <div class="two columns">
+      <%= f.label :email, "Email", :title => 'Enter your email address.' %>
     </div>
-    <div class="user-input">
-      <%= f.text_field :email, :class => "two columns", :title => 'Enter your email address.' %>
+    <div class="two columns">
+      <%= f.text_field :email, :title => 'Enter your email address.' %>
     </div>
-    <div>
-      <%= f.label :dob, "Date of birth", :title => 'Enter your date of birth.', :class => "two columns" %>
+    <div class="two columns">
+      <%= f.label :dob, "Date of birth", :title => 'Enter your date of birth.' %>
     </div>
-    <div class="user-input">
-      <%= f.date_field :dob, :class => "two columns", :required => true, :autofocus => true, :title => 'Enter your date of birth.' %>
+    <div class="two columns">
+      <%= f.date_field :dob, :required => true, :autofocus => true, :title => 'Enter your date of birth.' %>
     </div>
-
-    <div>
-      <%= f.label :gender, :title => 'Please select your gender.', :class => "one columns" %>
+  </div>
+  <div class="row">
+    <div class="two columns">
+      <%= f.label :gender, :title => 'Please select your gender.' %>
     </div>
-    <div class="user-input">
-      <%= f.select :gender, [['Male','Male'],['Female','Female']], :class => "two columns", :required => true, :include_blank => true %>
+    <div class="two columns">
+      <%= f.select :gender, [['Male','Male'],['Female','Female']], :required => true, :include_blank => true %>
     </div>
-    <div class="row">
-      <%= f.label :question, "What do you want to ask?", :class => "two columns" %>
+    <div class="two columns">
+      <%= f.label :question, "What do you want to ask?" %>
     </div>
-    <div class="user-input">
-      <%= f.text_field :question, :class => "two columns", :placeholder => 'Enter the question for your matches...' %>
+    <div class="two columns">
+      <%= f.text_field :question, :placeholder => 'Enter the question for your matches...' %>
     </div>
-    <div>
-      <%= f.label :question_time, "Time to answer?", :class => "one columns" %>
+    <div class="two columns">
+      <%= f.label :question_time, "Time to answer?" %>
     </div>
-    <div class="user-input">
-      <%= f.number_field :question_time, :class => "two columns", :min => '10', :max => '60' %>
+    <div class="two columns">
+      <%= f.number_field :question_time, :min => '10', :max => '60' %>
     </div>
-    <div>
-      <%= f.label :sexual_preference, "Sexual preference?", :class => "one columns" %>
+  </div>
+  <div class="row">
+    <div class="two columns">
+      <%= f.label :sexual_preference, "Sexual preference?" %>
     </div>
-    <div class="user-input">
-      <%= f.select :sexual_preference, [['Male','Male'],['Female','Female']], :class => "two columns", :include_blank => true %>
+    <div class="two columns">
+      <%= f.select :sexual_preference, [['Male','Male'],['Female','Female']], :include_blank => true %>
     </div>
-    <div>
-      <%= f.label :age_min, "Minimum Age", :class => "one columns" %>
+    <div class="two columns">
+      <%= f.label :age_min, "Minimum Age" %>
     </div>
-    <div class="user-input">
-      <%= f.number_field :age_min, :min => '18', :max => '99', :class => "two columns" %>
+    <div class="two columns">
+      <%= f.number_field :age_min, :min => '18', :max => '99' %>
     </div>
-    <div>  
-      <%= f.label :age_min, "Maximum Age", :class => "one columns" %>
+    <div class="two columns">
+      <%= f.label :age_min, "Maximum Age" %>
     </div>
-    <div class="user-input">
-      <%= f.number_field :age_max, :class => "two columns", :min => '18', :max => '99' %>
+    <div class="two columns">
+      <%= f.number_field :age_max, :min => '18', :max => '99' %>
     </div>
-    <div class="row">
-      <%= f.label :distance_max, "Search distance", :class => "one columns" %>
+  </div>
+  <div class="row">
+    <div class="two columns">
+      <%= f.label :distance_max, "Search distance" %>
     </div>
-    <div class="user-input">
-      <%= f.number_field :distance_max, :class => "two columns", :min => '1', :max => '500' %>
+    <div class="two columns">
+      <%= f.number_field :distance_max, :min => '1', :max => '500' %>
     </div>
-    <div>
-      <%= f.label :photo, "Photo URL", :class => "one columns" %>
+    <div class="two columns">
+      <%= f.label :photo, "Photo URL" %>
     </div>
-    <div class="user-input">
-      <%  f.text_field :photo, :class => "two columns" %>
+    <div class="two columns">
+      <%  f.text_field :photo %>
     </div>
   </div>
 </div>
 
-<%= f.submit "Update Profile" %>
+<%= f.submit "Update Profile", :class => "update-profile" %>
 <% end %>
 
